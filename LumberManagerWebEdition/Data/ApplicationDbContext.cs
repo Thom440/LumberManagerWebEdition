@@ -25,6 +25,14 @@ namespace LumberManagerWebEdition.Data
             builder.Entity<IdentityUserRole<string>>().HasNoKey();
             builder.Entity<IdentityUserLogin<string>>().HasNoKey();
             builder.Entity<IdentityUserToken<string>>().HasNoKey();
+
+            builder.Entity<Category>().HasData(new Category { CategoryID = 1, CategoryName = "WW" });
+            builder.Entity<Category>().HasData(new Category { CategoryID = 2, CategoryName = ".25" });
+            builder.Entity<Category>().HasData(new Category { CategoryID = 3, CategoryName = ".40" });
+            builder.Entity<Category>().HasData(new Category { CategoryID = 4, CategoryName = ".60" });
+            builder.Entity<Category>().HasData(new Category { CategoryID = 5, CategoryName = "ACQ" });
+            builder.Entity<Category>().HasData(new Category { CategoryID = 6, CategoryName = "CCA" });
+
         }
         public virtual DbSet<Customer> Customers { get; set; }
     }
