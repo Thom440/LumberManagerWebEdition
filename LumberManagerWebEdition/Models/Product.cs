@@ -51,7 +51,7 @@ namespace LumberManagerWebEdition.Models
 
         public List<Category> Category { get; set; } = new List<Category>();
 
-        public virtual List<OrderLineItems> InvoiceLineItems { get; set; } = new List<OrderLineItems>();
+        public virtual List<OrderLineItems> OrderLineItems { get; set; } = new List<OrderLineItems>();
 
     }
 }
