@@ -21,10 +21,8 @@ namespace LumberManagerWebEdition.Data
         public virtual DbSet<OrderLineItems> OrderLineItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.Entity<OrderLineItems>().HasKey(OrderLineItems => new { OrderLineItems.OrderID, OrderLineItems.ProductID });
-            builder.Entity<IdentityUserRole<string>>().HasNoKey();
-            builder.Entity<IdentityUserLogin<string>>().HasNoKey();
-            builder.Entity<IdentityUserToken<string>>().HasNoKey();
 
             builder.Entity<Category>().HasData(new Category { CategoryID = 1, CategoryName = "WW" });
             builder.Entity<Category>().HasData(new Category { CategoryID = 2, CategoryName = ".25" });
