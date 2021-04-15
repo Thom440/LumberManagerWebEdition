@@ -28,28 +28,28 @@
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <input type="checkbox" id="ww" value="WW" />
+                <div class="checkbox group1">
+                    <input type="checkbox" id="ww" value="WW" class="group1"/>
                     <label for="ww">White Wood</label>
                 </div>
-                <div class="checkbox">
-                    <input type="checkbox" id="25" />
+                <div class="checkbox group2">
+                    <input type="checkbox" id="25" class="group2" />
                     <label for="25">.25</label>
                 </div>
-                <div>
-                    <input type="checkbox" id="40" />
+                <div class="checkbox group2">
+                    <input type="checkbox" id="40" class="group2" />
                     <label for="40">.40</label>
                 </div>
-                <div class="checkbox">
-                    <input type="checkbox" id="60" />
+                <div class="checkbox group2">
+                    <input type="checkbox" id="60" class=" = group2" />
                     <label for="60">.60</label>
                 </div>
-                <div class="checkbox">
-                    <input type="checkbox" id="acq" />
+                <div class="checkbox group3">
+                    <input type="checkbox" id="acq" class="group3" />
                     <label for="acq">ACQ</label>
                 </div>
-                <div class="checkbox">
-                    <input type="checkbox" id="cca"/>
+                <div class="checkbox group3">
+                    <input type="checkbox" id="cca" class="group3"/>
                     <label for="cca">CCA</label>
                 </div>
             </div>
@@ -66,4 +66,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
 }
