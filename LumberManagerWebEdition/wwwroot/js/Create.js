@@ -32,7 +32,7 @@ function disableCheckBoxes() {
             $("#40").prop("checked", false);
             $("#60").prop("checked", false);
         }
-        else {
+        else if ($("#acq").prop("checked") == false && $("#cca").prop("checked") == false) {
             $("input.group1").prop("disabled", false);
         }
     }
@@ -42,7 +42,7 @@ function disableCheckBoxes() {
             $("#25").prop("checked", false);
             $("#60").prop("checked", false);
         }
-        else {
+        else if ($("#acq").prop("checked") == false && $("#cca").prop("checked") == false) {
             $("input.group1").prop("disabled", false);
         }
     }
@@ -52,16 +52,30 @@ function disableCheckBoxes() {
             $("#25").prop("checked", false);
             $("#40").prop("checked", false);
         }
-        else {
+        else if ($("#acq").prop("checked") == false && $("#cca").prop("checked") == false) {
             $("input.group1").prop("disabled", false);
         }
     }
     else if (this == document.getElementById("acq")) {
-        $("input.group1").prop("disabled", true);
-        $("#cca").prop("checked", false);
+        if (this.checked) {
+            $("input.group1").prop("disabled", true);
+            $("#cca").prop("checked", false);
+        }
+        else {
+            if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
+                $("#60").prop("checked") == false) {
+                $("input.group1").prop("disabled", false);
+            }
+        }
     }
     else {
-        $("input.group1").prop("disabled", true);
-        $("#acq").prop("checked", false);
+        if (this.checked) {
+            $("input.group1").prop("disabled", true);
+            $("#acq").prop("checked", false);
+        }
+        else if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
+                  $("#60").prop("checked") == false) {
+            $("input.group1").prop("disabled", false);
+        }
     }
 }
