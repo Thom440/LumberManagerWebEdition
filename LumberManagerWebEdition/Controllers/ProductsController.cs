@@ -123,7 +123,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> UpdateInventory(int? id)
         {
             if (id == null)
             {
@@ -143,7 +143,7 @@ namespace LumberManagerWebEdition.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,Height,Width,Length,OnHand,Sold")] Product product)
+        public async Task<IActionResult> UpdateInventory(int id, [Bind("ProductID,Height,Width,Length,OnHand,Sold")] Product product)
         {
             if (id != product.ProductID)
             {
