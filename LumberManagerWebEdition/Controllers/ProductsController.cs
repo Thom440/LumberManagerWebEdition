@@ -80,56 +80,42 @@ namespace LumberManagerWebEdition.Controllers
                 bool ccaSelected = (Request.Form["cca"] == "CCA") ? true : false;
                 if (wwSelected)
                 {
-                    Category category = new Category() { CategoryID = 1, CategoryName = "WW"};
-                    createProductViewModel.Product.Category.Add(category);
+                    createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 1));
                 }
                 else
                 {
                     if (twoFiveSelected && acqSelected)
                     {
-                        Category category = new Category() { CategoryID = 2, CategoryName = ".25" };
-                        Category category1 = new Category() { CategoryID = 5, CategoryName = "ACQ" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 2));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 5));
                     }
                     else if (twoFiveSelected && ccaSelected)
                     {
-                        Category category = new Category() { CategoryID = 2, CategoryName = ".25" };
-                        Category category1 = new Category() { CategoryID = 6, CategoryName = "CCA" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 2));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 6));
                     }
                     else if (four0Selected && acqSelected)
                     {
-                        Category category = new Category() { CategoryID = 3, CategoryName = ".40" };
-                        Category category1 = new Category() { CategoryID = 5, CategoryName = "ACQ" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 3));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 5));
                     }
                     else if (four0Selected && ccaSelected)
                     {
-                        Category category = new Category() { CategoryID = 3, CategoryName = ".40" };
-                        Category category1 = new Category() { CategoryID = 6, CategoryName = "CCA" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 3));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 6));
                     }
                     else if (six0Selected && acqSelected)
                     {
-                        Category category = new Category() { CategoryID = 4, CategoryName = ".60" };
-                        Category category1 = new Category() { CategoryID = 5, CategoryName = "ACQ" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 4));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 5));
                     }
                     else if (six0Selected && ccaSelected)
                     {
-                        Category category = new Category() { CategoryID = 4, CategoryName = ".60" };
-                        Category category1 = new Category() { CategoryID = 6, CategoryName = "CCA" };
-                        createProductViewModel.Product.Category.Add(category);
-                        createProductViewModel.Product.Category.Add(category1);
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 4));
+                        createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 6));
                     }
                 }
                 await ProductDb.AddProductAsync(_context, createProductViewModel.Product);
-                //_context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
