@@ -61,11 +61,9 @@ function disableCheckBoxes() {
             $("input.group1").prop("disabled", true);
             $("#cca").prop("checked", false);
         }
-        else {
-            if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
+        else if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
                 $("#60").prop("checked") == false) {
-                $("input.group1").prop("disabled", false);
-            }
+                $("input.group1").prop("disabled", false);    
         }
     }
     else {
@@ -73,8 +71,8 @@ function disableCheckBoxes() {
             $("input.group1").prop("disabled", true);
             $("#acq").prop("checked", false);
         }
-        else if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
-                  $("#60").prop("checked") == false) {
+        else if ($("#.25").prop("checked") == false && $("#.40").prop("checked") == false &&
+                  $("#.60").prop("checked") == false) {
             $("input.group1").prop("disabled", false);
         }
     }
