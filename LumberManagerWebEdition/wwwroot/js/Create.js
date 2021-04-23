@@ -66,13 +66,13 @@ function disableCheckBoxes() {
                 $("input.group1").prop("disabled", false);    
         }
     }
-    else {
+    else if (this == document.getElementById("cca")) {
         if (this.checked) {
             $("input.group1").prop("disabled", true);
             $("#acq").prop("checked", false);
         }
-        else if ($("#.25").prop("checked") == false && $("#.40").prop("checked") == false &&
-                  $("#.60").prop("checked") == false) {
+        else if ($("#25").prop("checked") == false && $("#40").prop("checked") == false &&
+            $("#60").prop("checked") == false) {
             $("input.group1").prop("disabled", false);
         }
     }
