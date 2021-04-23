@@ -22,7 +22,7 @@ namespace LumberManagerWebEdition.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(await ProductDb.GetAllProductsAsync(_context));
         }
 
         // GET: Products/Details/5
