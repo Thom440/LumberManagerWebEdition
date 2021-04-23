@@ -22,6 +22,12 @@
                 @Html.DisplayNameFor(model => model.Length)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Treatment Type
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.OnHand)
             </th>
             <th>
@@ -41,6 +47,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @if (item.Category.Count > 0)
+                {
+                    @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
+                }
+             </td>
+            <td>
+                @if (item.Category.Count > 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OnHand)
