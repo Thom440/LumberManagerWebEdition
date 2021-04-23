@@ -123,14 +123,14 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> UpdateInventory(int? id)
+        public IActionResult UpdateInventory(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = ProductDb.GetProduct(_context, id);
             if (product == null)
             {
                 return NotFound();
