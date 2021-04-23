@@ -1,4 +1,4 @@
-﻿using LumberManagerWebEdition.Models;
+﻿ using LumberManagerWebEdition.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ namespace LumberManagerWebEdition.Data
                                where p.ProductID == id
                                select p).Include(nameof(Product.Category)).Single();
             return product;
+        }
+
+        public static async Task<List<Product>> GetAllProductsAsync(ApplicationDbContext _context)
+        {
+            List<Product> products = await (from p in _context.Products
+                                      select p).Include(nameof(Product.Category)).ToListAsync();
+            return products;
         }
     }
 }
