@@ -1,4 +1,5 @@
 ﻿using LumberManagerWebEdition.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ namespace LumberManagerWebEdition.Data
             }
             await _context.SaveChangesAsync();
             return p;
+        }
+
+        public static Product GetProduct(ApplicationDbContext _context, int? id)
+        {
+            Product product = (from p in _context.Products
+                               where p.ProductID == id
+                               select p).Include(nameof(Product.Category)).Single();
+            return product;
         }
     }
 }
