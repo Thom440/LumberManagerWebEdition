@@ -5,17 +5,46 @@
     let sixOCheckBox = document.getElementById("60");
     let acqCheckBox = document.getElementById("acq");
     let ccaCheckBox = document.getElementById("cca");
+    let onSubmit = document.getElementById("submit");
     wwCheckBox.onclick = disableCheckBoxes;
     twoFiveCheckBox.onclick = disableCheckBoxes;
     fourOCheckBox.onclick = disableCheckBoxes;
     sixOCheckBox.onclick = disableCheckBoxes;
     acqCheckBox.onclick = disableCheckBoxes;
     ccaCheckBox.onclick = disableCheckBoxes;
+    onSubmit.onclick = validateCheckboxes;
+}
+
+function validateCheckboxes() {
+    let isValid = false;
+    if ($("#ww").prop("checked")) {
+        isValid = true;
+    }
+    else if ($("#25").prop("checked") && ($("#acq").prop("checked") || $("#cca").prop("checked"))) {
+        isValid = true;
+    }
+    else if ($("#40").prop("checked") && ($("#acq").prop("checked") || $("#cca").prop("checked"))) {
+        isValid = true;
+    }
+    else if ($("#60").prop("checked") && ($("#acq").prop("checked") || $("#cca").prop("checked"))) {
+        isValid = true;
+    }
+
+    if (!isValid) {
+        document.getElementById("checkbox-error").innerText = "Must select appropriate checkbox categories";
+        $("#create").submit(function (e) {
+            e.preventDefault();
+        });
+    }
+    else {
+        $("#create").unbind("submit").submit();
+    }
 }
 
 function disableCheckBoxes() {
     if (this == document.getElementById("ww")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group2").prop("disabled", true);
             $("input.group3").prop("disabled", true);
             $("#acq").prop("checked", false);
@@ -28,6 +57,7 @@ function disableCheckBoxes() {
     }
     else if (this == document.getElementById("25")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group1").prop("disabled", true);
             $("#40").prop("checked", false);
             $("#60").prop("checked", false);
@@ -38,6 +68,7 @@ function disableCheckBoxes() {
     }
     else if (this == document.getElementById("40")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group1").prop("disabled", true);
             $("#25").prop("checked", false);
             $("#60").prop("checked", false);
@@ -48,6 +79,7 @@ function disableCheckBoxes() {
     }
     else if (this == document.getElementById("60")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group1").prop("disabled", true);
             $("#25").prop("checked", false);
             $("#40").prop("checked", false);
@@ -58,6 +90,7 @@ function disableCheckBoxes() {
     }
     else if (this == document.getElementById("acq")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group1").prop("disabled", true);
             $("#cca").prop("checked", false);
         }
@@ -68,6 +101,7 @@ function disableCheckBoxes() {
     }
     else if (this == document.getElementById("cca")) {
         if (this.checked) {
+            document.getElementById("checkbox-error").innerText = "";
             $("input.group1").prop("disabled", true);
             $("#acq").prop("checked", false);
         }
