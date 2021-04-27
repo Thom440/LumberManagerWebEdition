@@ -33,6 +33,11 @@ namespace LumberManagerWebEdition.Data
         {
             List<Product> products = await (from p in _context.Products
                                       select p).Include(nameof(Product.Category)).ToListAsync();
+            products = products.OrderBy(p => p.Height)
+                                       .ThenBy(p => p.Width)
+                                       .ThenBy(p => p.Length)
+                                       .ThenBy(p => p.Category[1].CategoryName)
+                                       .ThenBy(p => p.Category[0].CategoryName).ToList();
             return products;
         }
     }
