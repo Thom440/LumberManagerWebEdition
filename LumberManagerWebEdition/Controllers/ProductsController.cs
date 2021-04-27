@@ -81,6 +81,7 @@ namespace LumberManagerWebEdition.Controllers
                 if (wwSelected)
                 {
                     createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 1));
+                    createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 7));
                 }
                 else
                 {

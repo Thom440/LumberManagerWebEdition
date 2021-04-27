@@ -30,7 +30,7 @@ namespace LumberManagerWebEdition.Data
             builder.Entity<Category>().HasData(new Category { CategoryID = 4, CategoryName = ".60" });
             builder.Entity<Category>().HasData(new Category { CategoryID = 5, CategoryName = "ACQ" });
             builder.Entity<Category>().HasData(new Category { CategoryID = 6, CategoryName = "CCA" });
-
+            builder.Entity<Category>().HasData(new Category { CategoryID = 7, CategoryName = "N/A" });
         }
         public virtual DbSet<Customer> Customers { get; set; }
     }
