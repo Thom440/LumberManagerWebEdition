@@ -148,7 +148,7 @@ namespace LumberManagerWebEdition.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateInventory(int id, [Bind("ProductID,Height,Width,Length,OnHand,Sold")] Product product)
+        public async Task<IActionResult> UpdateInventory(int id, Product product)
         {
             if (id != product.ProductID)
             {
@@ -159,8 +159,7 @@ namespace LumberManagerWebEdition.Controllers
             {
                 try
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    await ProductDb.Update(_context, product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

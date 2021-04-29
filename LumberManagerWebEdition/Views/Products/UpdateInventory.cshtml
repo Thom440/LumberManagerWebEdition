@@ -4,8 +4,9 @@
     ViewData["Title"] = "UpdateInventory";
 }
 
-<h1>@Model.OrderDisplayString()</h1>
+<h1>Update Inventory</h1>
 
+<h4>@Model.OrderDisplayString()</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -13,9 +14,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductID" />
             <div class="form-group">
+                <input type="hidden" asp-for="Height" class="form-control" readonly/>
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Width" class="form-control" readonly/>
+                <span asp-validation-for="Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Length" class="form-control" readonly/>
+                <span asp-validation-for="Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="OnHand" class="control-label"></label>
                 <input asp-for="OnHand" class="form-control" />
                 <span asp-validation-for="OnHand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Sold" class="form-control" readonly/>
+                <span asp-validation-for="Sold" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

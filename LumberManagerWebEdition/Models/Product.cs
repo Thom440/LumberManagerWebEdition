@@ -46,7 +46,14 @@ namespace LumberManagerWebEdition.Models
 
         public string OrderDisplayString()
         {
-            return Height + " x " + Width + " x " + Length + " " + String.Join(" ", Category);
+            if (Category[1].CategoryName == "N/A")
+            {
+                return $"{Height} x {Width} x {Length} White Wood";
+            }
+            else
+            {
+                return Height + " x " + Width + " x " + Length + " " + String.Join(" ", Category);
+            }  
         }
 
         public List<Category> Category { get; set; } = new List<Category>();

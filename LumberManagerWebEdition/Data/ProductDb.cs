@@ -40,5 +40,12 @@ namespace LumberManagerWebEdition.Data
                                        .ThenBy(p => p.Category[0].CategoryName).ToList();
             return products;
         }
+
+        public static async Task<Product> Update(ApplicationDbContext _context, Product p)
+        {
+            _context.Entry(p).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return p;
+        }
     }
 }
