@@ -46,28 +46,28 @@ namespace LumberManagerWebEdition.Models
             }
         }
 
-        public static async Task CreateDefaultInstructor(IServiceProvider serviceProvider)
+        public static async Task CreateDefaultAdmin(IServiceProvider serviceProvider)
         {
-            const string email = "thom440@someemail.com";
+            const string email = "admin@admin.com";
             const string username = "admin";
-            const string password = "12345678";
+            const string password = "adminadmin";
 
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
             // Check if any users are in database
             if (userManager.Users.Count() == 0)
             {
-                IdentityUser instructor = new IdentityUser()
+                IdentityUser admin = new IdentityUser()
                 {
                     Email = email,
                     UserName = username,
                 };
 
                 // Create instructor
-                await userManager.CreateAsync(instructor, password);
+                await userManager.CreateAsync(admin, password);
 
                 // Add to instructor role
-                await userManager.AddToRoleAsync(instructor, Admin);
+                await userManager.AddToRoleAsync(admin, Admin);
             }
         }
     }
