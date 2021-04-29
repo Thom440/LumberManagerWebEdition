@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LumberManagerWebEdition.Data;
 using LumberManagerWebEdition.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LumberManagerWebEdition.Controllers
 {
@@ -20,6 +21,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products
+        [Authorize(Roles = IdentityHelper.Admin)]
         public async Task<IActionResult> Index()
         {
             return View(await ProductDb.GetAllProductsAsync(_context));
@@ -44,6 +46,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = IdentityHelper.Admin)]
         [HttpGet]
         public IActionResult Create()
         {
@@ -124,6 +127,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = IdentityHelper.Admin)]
         public IActionResult UpdateInventory(int? id)
         {
             if (id == null)
@@ -175,6 +179,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = IdentityHelper.Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -193,6 +198,7 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // POST: Products/Delete/5
+        [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
