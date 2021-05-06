@@ -26,7 +26,7 @@ namespace LumberManagerWebEdition.Models
 
         public virtual List<OrderLineItems> OrderLineItems { get; set; } = new List<OrderLineItems>();
 
-        public List<Customer> Customers { get; set; } = new List<Customer>();
+        public List<User> Customers { get; set; } = new List<User>();
 
         public Order()
         {
