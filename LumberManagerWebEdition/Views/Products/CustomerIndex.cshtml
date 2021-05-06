@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LumberManagerWebEdition.Models.Product>
+
+@{
+    ViewData["Title"] = "CustomerIndex";
+}
+
+<h1>CustomerIndex</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Treatment Type
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @if (item.Category.Count > 0)
+                {
+                    @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
+                }
+            </td>
+            <td>
+                @if (item.Category.Count > 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

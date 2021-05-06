@@ -27,6 +27,12 @@ namespace LumberManagerWebEdition.Controllers
             return View(await ProductDb.GetAllProductsAsync(_context));
         }
 
+        [Authorize(Roles = IdentityHelper.Customer)]
+        public async Task<IActionResult> CustomerIndex()
+        {
+            return View(await ProductDb.GetAllProductsAsync(_context));
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
