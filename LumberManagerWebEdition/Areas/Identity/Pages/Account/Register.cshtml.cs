@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using LumberManagerWebEdition.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,14 +20,15 @@ namespace LumberManagerWebEdition.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private const string AdminEmail = "@lumbereverything.com";
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -45,6 +47,32 @@ namespace LumberManagerWebEdition.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [StringLength(25)]
+            public string Username { get; set; }
+
+            public string Business { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string ContactFirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string ContactLastName { get; set; }
+
+            [Required]
+            public string Address { get; set; }
+
+            [Required]
+            public string City { get; set; }
+
+            [Required]
+            public string State { get; set; }
+
+            [Required]
+            public int Zipcode { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -74,11 +102,23 @@ namespace LumberManagerWebEdition.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Username, Email = Input.Email,
+                                      Business = Input.Business, ContactFirstName = Input.ContactFirstName,
+                                      ContactLastName = Input.ContactLastName, Address = Input.Address,
+                                      City = Input.City, State = Input.State, ZipCode = Input.Zipcode};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if (user.Email.ToLower().EndsWith(AdminEmail))
+                    {
+                        await _userManager.AddToRoleAsync(user, IdentityHelper.Admin);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, IdentityHelper.Customer);
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
