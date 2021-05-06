@@ -33,7 +33,7 @@ namespace LumberManagerWebEdition
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(IdentityHelper.SetIdentityOptions)
+            services.AddDefaultIdentity<Customer>(IdentityHelper.SetIdentityOptions)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LumberManagerWebEdition.Models
 {
-    public class Customer
+    public class Customer : IdentityUser
     {
         [Key]
         public int CustomerID { get; set; }
@@ -17,13 +18,13 @@ namespace LumberManagerWebEdition.Models
         public string Business { get; set; }
 
         /// <summary>
-        /// First name of the customer or business.
+        /// First name of the customer or business contact.
         /// </summary>
         [Required]
         public string ContactFirstName { get; set; }
 
         /// <summary>
-        /// Last name of the customer or business.
+        /// Last name of the customer or business contact.
         /// </summary>
         [Required]
         public string ContactLastName { get; set; }
@@ -41,7 +42,7 @@ namespace LumberManagerWebEdition.Models
         public string State { get; set; }
 
         [Required]
-        public Int32 ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
         public List<Order> Orders { get; set; } = new List<Order>();
 

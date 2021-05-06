@@ -51,16 +51,30 @@ namespace LumberManagerWebEdition.Models
             const string email = "admin@admin.com";
             const string username = "admin";
             const string password = "adminadmin";
+            const string contactFirstName = "Bob";
+            const string contactLastName = "Jones";
+            const string address = "123 Any Street";
+            const string city = "Tacoma";
+            const string state = "WA";
+            const int zip = 98444;
+            const string business = "Lumber Everything";
 
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<Customer>>();
 
             // Check if any users are in database
             if (userManager.Users.Count() == 0)
             {
-                IdentityUser admin = new IdentityUser()
+                Customer admin = new Customer()
                 {
                     Email = email,
                     UserName = username,
+                    ContactFirstName = contactFirstName,
+                    ContactLastName = contactLastName,
+                    Address = address,
+                    City = city,
+                    State = state,
+                    ZipCode = zip,
+                    Business = business
                 };
 
                 // Create instructor
