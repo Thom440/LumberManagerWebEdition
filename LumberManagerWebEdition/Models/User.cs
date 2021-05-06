@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LumberManagerWebEdition.Models
 {
-    public class Customer : IdentityUser
+    public class User : IdentityUser
     {
         [Key]
         public int CustomerID { get; set; }

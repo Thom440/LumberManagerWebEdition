@@ -59,12 +59,12 @@ namespace LumberManagerWebEdition.Models
             const int zip = 98444;
             const string business = "Lumber Everything";
 
-            var userManager = serviceProvider.GetRequiredService<UserManager<Customer>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
             // Check if any users are in database
             if (userManager.Users.Count() == 0)
             {
-                Customer admin = new Customer()
+                User admin = new User()
                 {
                     Email = email,
                     UserName = username,

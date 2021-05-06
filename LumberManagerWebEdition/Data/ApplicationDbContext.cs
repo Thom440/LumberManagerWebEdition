@@ -8,7 +8,7 @@ using System.Text;
 
 namespace LumberManagerWebEdition.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Customer>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -32,6 +32,6 @@ namespace LumberManagerWebEdition.Data
             builder.Entity<Category>().HasData(new Category { CategoryID = 6, CategoryName = "CCA" });
             builder.Entity<Category>().HasData(new Category { CategoryID = 7, CategoryName = "N/A" });
         }
-        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<User> Customers { get; set; }
     }
 }
