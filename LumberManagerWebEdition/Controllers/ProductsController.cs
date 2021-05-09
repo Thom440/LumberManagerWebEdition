@@ -22,15 +22,35 @@ namespace LumberManagerWebEdition.Controllers
 
         // GET: Products
         [Authorize(Roles = IdentityHelper.Admin)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            return View(await ProductDb.GetAllProductsAsync(_context));
+            int pageNum = id ?? 1;
+            const int PageSize = 10;
+            ViewData["CurrentPage"] = pageNum;
+
+            int numProducts = await ProductDb.GetTotalProductsAsync(_context);
+
+            int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
+
+            ViewData["MaxPage"] = totalPages;
+
+            return View(await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum));
         }
 
         [Authorize(Roles = IdentityHelper.Customer)]
-        public async Task<IActionResult> CustomerIndex()
+        public async Task<IActionResult> CustomerIndex( int? id)
         {
-            return View(await ProductDb.GetAllProductsAsync(_context));
+            int pageNum = id ?? 1;
+            const int PageSize = 10;
+            ViewData["CurrentPage"] = pageNum;
+
+            int numProducts = await ProductDb.GetTotalProductsAsync(_context);
+
+            int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
+
+            ViewData["MaxPage"] = totalPages;
+
+            return View(await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum));
         }
 
         // GET: Products/Details/5
@@ -75,6 +95,7 @@ namespace LumberManagerWebEdition.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductViewModel createProductViewModel)
@@ -152,6 +173,7 @@ namespace LumberManagerWebEdition.Controllers
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateInventory(int id, Product product)
