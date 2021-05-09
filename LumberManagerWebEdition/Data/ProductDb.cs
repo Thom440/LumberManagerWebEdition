@@ -29,10 +29,13 @@ namespace LumberManagerWebEdition.Data
             return product;
         }
 
-        public static async Task<List<Product>> GetAllProductsAsync(ApplicationDbContext _context)
+        public static async Task<List<Product>> GetAllProductsAsync(ApplicationDbContext _context, int pageSize, int pageNum)
         {
             List<Product> products = await (from p in _context.Products
-                                      select p).Include(nameof(Product.Category)).ToListAsync();
+                                      select p).Skip(pageSize * (pageNum - 1))
+                                               .Take(pageSize)
+                                               .Include(nameof(Product.Category))
+                                               .ToListAsync();
             products = products.OrderBy(p => p.Height)
                                        .ThenBy(p => p.Width)
                                        .ThenBy(p => p.Length)
@@ -46,6 +49,12 @@ namespace LumberManagerWebEdition.Data
             _context.Entry(p).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return p;
+        }
+
+        public static async Task<int> GetTotalProductsAsync(ApplicationDbContext _context)
+        {
+            return await (from p in _context.Products
+                          select p).CountAsync();
         }
     }
 }
