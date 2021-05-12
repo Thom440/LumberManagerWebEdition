@@ -56,5 +56,25 @@ namespace LumberManagerWebEdition.Data
             return await (from p in _context.Products
                           select p).CountAsync();
         }
+
+        public static bool CheckForExistingProduct(ApplicationDbContext _context, Product p)
+        {
+            List<Product> product = (from prod in _context.Products
+                                     where prod.Height == p.Height
+                                     && prod.Width == p.Width
+                                     && prod.Length == p.Length
+                                     select prod).Include(c => c.Category).ToList();
+            for (int i = 0; i < product.Count; i++)
+            {
+                for (int j = 0; j < p.Category.Count; j++)
+                {
+                    if (product[i].Category[j].CategoryID == p.Category[j].CategoryID)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

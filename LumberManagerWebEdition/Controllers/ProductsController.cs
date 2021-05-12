@@ -146,9 +146,17 @@ namespace LumberManagerWebEdition.Controllers
                         createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 6));
                     }
                 }
-                await ProductDb.AddProductAsync(_context, createProductViewModel.Product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!(ProductDb.CheckForExistingProduct(_context, createProductViewModel.Product)))
+                {
+                    await ProductDb.AddProductAsync(_context, createProductViewModel.Product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["Message"] = "Product already in database.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(createProductViewModel);
         }
