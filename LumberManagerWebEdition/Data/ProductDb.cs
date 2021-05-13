@@ -76,5 +76,27 @@ namespace LumberManagerWebEdition.Data
             }
             return false;
         }
+
+        public static async Task<List<byte>> GetHeightAsync(ApplicationDbContext _context)
+        {
+            List<byte> height =  await (from p in _context.Products
+                          select p.Height).Distinct().ToListAsync();
+            return height;
+        }
+
+        public static async Task<List<byte>> GetWidthAsync(ApplicationDbContext _context, byte height)
+        {
+            List<byte> width = await (from p in _context.Products
+                                      where p.Height == height
+                                      select p.Width).Distinct().ToListAsync();
+            return width;
+        }
+
+        public static async Task<List<byte>> GetLengthAsync(ApplicationDbContext _context, byte height, byte width)
+        {
+            return await (from p in _context.Products
+                          where p.Height == height && p.Width == width
+                          select p.Length).Distinct().ToListAsync();
+        }
     }
 }

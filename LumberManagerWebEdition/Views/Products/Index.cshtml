@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Index";
+    var listHeight = (List<byte>)ViewData["ListHeight"];
+    var listWidth = (List<byte>)ViewData["ListWidth"];
+    var listLength = (List<byte>)ViewData["ListLength"];
+    var listCategory = (List<Category>)ViewData["ListCategory"];
+    var listType = (List<Category>)ViewData["ListType"];
 }
 
 @if (TempData["Message"] != null)
@@ -19,6 +24,112 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<div class="dropdown">
+    <div>
+    @if (ViewData["Height"] != null)
+    {
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="@ViewData["Height"]" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @ViewData["Height"]
+        </button>
+    }
+    else
+    {
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Height" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Height
+        </button>
+    }
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        @for (int i = 0; i < listHeight.Count; i++)
+        {
+            <a class="dropdown-item" asp-action="Index" asp-route-height="@listHeight[i]">@listHeight[i]</a>
+        }
+    </div>
+</div>
+    <div>
+        @if (ViewData["Width"] != null)
+        {
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @ViewData["Width"]
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Width
+            </button>
+        }
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            @for (int i = 0; i < listWidth.Count; i++)
+            {
+                <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@listWidth[i]">@listWidth[i]</a>
+            }
+        </div>
+        <div>
+            @if (ViewData["Length"] != null)
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @ViewData["Length"]
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Length
+                </button>
+            }
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @for (int i = 0; i < listLength.Count; i++)
+                {
+                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@listLength[i]">@listLength[i]</a>
+                }
+            </div>
+        </div>
+        <div>
+            @if (ViewData["Category"] != null)
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @ViewData["Category"]
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Category
+                </button>
+            }
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @for (int i = 0; i < listCategory.Count; i++)
+                {
+                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                       asp-route-category="@listCategory[i]">@listCategory[i]</a>
+                }
+            </div>
+        </div>
+        <div>
+            @if (ViewData["Type"] != null)
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @ViewData["Type"]
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Treatment Type
+                </button>
+            }
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @for (int i = 0; i < listType.Count; i++)
+                {
+                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                       asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@listType[i]">@listType[i]</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>

@@ -22,11 +22,53 @@ namespace LumberManagerWebEdition.Controllers
 
         // GET: Products
         [Authorize(Roles = IdentityHelper.Admin)]
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string? category, string? treatmentType)
         {
             int pageNum = id ?? 1;
             const int PageSize = 10;
             ViewData["CurrentPage"] = pageNum;
+
+            List<byte> listHeight = await ProductDb.GetHeightAsync(_context);
+            List<byte> listWidth = new List<byte>();
+            List<byte> listLength = new List<byte>();
+            List<Category> listCategory = new List<Category>();
+            List<Category> listType = new List<Category>();
+            if (height != null)
+            {
+                listWidth = await ProductDb.GetWidthAsync(_context, (byte)height);
+                if (width != null)
+                {
+                    listLength = await ProductDb.GetLengthAsync(_context, (byte)height, (byte)width);
+                    if (length != null)
+                    {
+                        listCategory = await CategoryDb.GetCategoryAsync(_context, (byte)height, (byte)width, (byte)length);
+                        if (category != null)
+                        {
+                            listType = await CategoryDb.GetTypeAsync(_context, (byte)height, (byte)width, (byte)length, category);
+                        }
+                    }
+                }
+            }
+
+            ViewData["Height"] = height;
+
+            ViewData["Width"] = width;
+
+            ViewData["Length"] = length;
+
+            ViewData["Category"] = category;
+
+            ViewData["Type"] = treatmentType;
+
+            ViewData["ListHeight"] = listHeight;
+
+            ViewData["ListWidth"] = listWidth;
+
+            ViewData["ListLength"] = listLength;
+
+            ViewData["ListCategory"] = listCategory;
+
+            ViewData["ListType"] = listType;
 
             int numProducts = await ProductDb.GetTotalProductsAsync(_context);
 
