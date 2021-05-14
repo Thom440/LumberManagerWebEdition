@@ -22,7 +22,7 @@ namespace LumberManagerWebEdition.Controllers
 
         // GET: Products
         [Authorize(Roles = IdentityHelper.Admin)]
-        public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string? category, string? treatmentType)
+        public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
             int pageNum = id ?? 1;
             const int PageSize = 10;
@@ -50,6 +50,40 @@ namespace LumberManagerWebEdition.Controllers
                 }
             }
 
+            List<Product> products;
+            int numProducts;
+
+            if (height != null && width != null && length != null && category != null && treatmentType != null)
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category, treatmentType);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length, category, treatmentType);
+            }
+            else if (height != null && width != null && length != null && category != null)
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length, category);
+            }
+            else if (height != null && width != null & length != null)
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length);
+            }
+            else if (height != null && width != null)
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width);
+            }
+            else if (height != null)
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height);
+            }
+            else
+            {
+                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum);
+                numProducts = await ProductDb.GetTotalProductsAsync(_context);
+            }
+
             ViewData["Height"] = height;
 
             ViewData["Width"] = width;
@@ -70,13 +104,13 @@ namespace LumberManagerWebEdition.Controllers
 
             ViewData["ListType"] = listType;
 
-            int numProducts = await ProductDb.GetTotalProductsAsync(_context);
+            
 
             int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
 
             ViewData["MaxPage"] = totalPages;
 
-            return View(await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum));
+            return View(products);
         }
 
         [Authorize(Roles = IdentityHelper.Customer)]

@@ -42,7 +42,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         @for (int i = 0; i < listHeight.Count; i++)
         {
-            <a class="dropdown-item" asp-action="Index" asp-route-height="@listHeight[i]">@listHeight[i]</a>
+            <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@listHeight[i]">@listHeight[i]</a>
         }
     </div>
 </div>
@@ -62,7 +62,7 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             @for (int i = 0; i < listWidth.Count; i++)
             {
-                <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@listWidth[i]">@listWidth[i]</a>
+                <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@listWidth[i]">@listWidth[i]</a>
             }
         </div>
         <div>
@@ -81,7 +81,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @for (int i = 0; i < listLength.Count; i++)
                 {
-                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@listLength[i]">@listLength[i]</a>
+                    <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@listLength[i]">@listLength[i]</a>
                 }
             </div>
         </div>
@@ -101,7 +101,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @for (int i = 0; i < listCategory.Count; i++)
                 {
-                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                    <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
                        asp-route-category="@listCategory[i]">@listCategory[i]</a>
                 }
             </div>
@@ -122,7 +122,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @for (int i = 0; i < listType.Count; i++)
                 {
-                    <a class="dropdown-item" asp-action="Index" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                    <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
                        asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@listType[i]">@listType[i]</a>
                 }
             </div>
@@ -202,13 +202,15 @@
         if (i == (int)ViewData["CurrentPage"])
         {
             <li class="page-item active">
-                <a class="page-link" asp-action="Index" asp-route-id="@i">@i</a>
+                <a class="page-link" asp-action="Index" asp-route-id="@i" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                       asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
             </li>
         }
         else
         {
             <li class="page-item">
-                <a class="page-link" asp-action="Index" asp-route-id="@i">@i</a>
+                <a class="page-link" asp-action="Index" asp-route-id="@i" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
+                       asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
             </li>
         }
 
