@@ -307,7 +307,7 @@ namespace LumberManagerWebEdition.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = "Product already in database.";
+                    TempData["Message"] = "Product not added. Product already in database.";
                     return RedirectToAction(nameof(Index));
                 }
             }
