@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Product>
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
 @{
     ViewData["Title"] = "Index";
     var listHeight = (List<byte>)ViewData["ListHeight"];
@@ -11,7 +12,7 @@
 
 @if (TempData["Message"] != null)
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         @TempData["Message"]
         <button type="button" class="close" data-dismiss="alert" aria-label="close">
             <span aria-hidden="true">&times;</span>
@@ -27,7 +28,6 @@
         <a asp-action="Create">Create New</a>
     </p>
 }
-
 
 <div class="dropdown btn-group">
     <div class="p-1">
@@ -107,7 +107,7 @@
             @for (int i = 0; i < listCategory.Count; i++)
             {
                 <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
-                    asp-route-category="@listCategory[i]">@listCategory[i]</a>
+                   asp-route-category="@listCategory[i]">@listCategory[i]</a>
             }
         </div>
     </div>
@@ -128,7 +128,7 @@
             @for (int i = 0; i < listType.Count; i++)
             {
                 <a class="dropdown-item" asp-action="Index" asp-route-id="1" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
-                    asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@listType[i]">@listType[i]</a>
+                   asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@listType[i]">@listType[i]</a>
             }
         </div>
     </div>
@@ -163,49 +163,62 @@
                 <th></th>
             }
         </tr>
-            
-            
+
+
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Width)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @if (item.Category.Count > 0)
+
+        @{
+            string previousUrl = http.HttpContext.Request.Path;
+        }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Height)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Length)
+                </td>
+                <td>
+                    @if (item.Category.Count > 0)
+                    {
+                        @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
+                    }
+                </td>
+                <td>
+                    @if (item.Category.Count > 1)
+                    {
+                        @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+                    }
+                </td>
+                @if (User.IsInRole(IdentityHelper.Admin))
                 {
-                    @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnHand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sold)
+                    </td>
+                    <td>
+                        <a asp-action="UpdateInventory" asp-route-id="@item.ProductID">Update Inventory</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                    </td>
                 }
-            </td>
-            <td>
-                @if (item.Category.Count > 1)
+                else if (User.IsInRole(IdentityHelper.Customer))
                 {
-                    @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+                    <td>
+                        <a class="btn btn-primary" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
+                           asp-controller="Cart" asp-action="Add">Add</a>
+                    </td>
                 }
-            </td>
-            @if (User.IsInRole(IdentityHelper.Admin))
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.OnHand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sold)
-                </td>
-                <td>
-                    <a asp-action="UpdateInventory" asp-route-id="@item.ProductID">Update Inventory</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
-                </td>
-            }
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
 <ul class="pagination">
@@ -215,14 +228,14 @@
         {
             <li class="page-item active">
                 <a class="page-link" asp-action="Index" asp-route-id="@i" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
-                       asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
+                   asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
             </li>
         }
         else
         {
             <li class="page-item">
                 <a class="page-link" asp-action="Index" asp-route-id="@i" asp-route-height="@ViewData["Height"]" asp-route-width="@ViewData["Width"]" asp-route-length="@ViewData["Length"]"
-                       asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
+                   asp-route-category="@ViewData["Category"]" asp-route-treatmentType="@ViewData["Type"]">@i</a>
             </li>
         }
 
