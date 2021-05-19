@@ -21,9 +21,13 @@
 
 <h1>Products</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole(IdentityHelper.Admin))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 
 <div class="dropdown btn-group">
     <div class="p-1">
@@ -148,14 +152,19 @@
             <th>
                 Treatment Type
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OnHand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sold)
-            </th>
-            <th></th>
+            @if (User.IsInRole(IdentityHelper.Admin))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.OnHand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sold)
+                </th>
+                <th></th>
+            }
         </tr>
+            
+            
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -174,24 +183,27 @@
                 {
                     @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
                 }
-             </td>
+            </td>
             <td>
                 @if (item.Category.Count > 1)
                 {
                     @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
                 }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnHand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sold)
-            </td>
-            <td>
-                <a asp-action="UpdateInventory" asp-route-id="@item.ProductID">Update Inventory</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
-            </td>
+            @if (User.IsInRole(IdentityHelper.Admin))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnHand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sold)
+                </td>
+                <td>
+                    <a asp-action="UpdateInventory" asp-route-id="@item.ProductID">Update Inventory</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                </td>
+            }
         </tr>
 }
     </tbody>

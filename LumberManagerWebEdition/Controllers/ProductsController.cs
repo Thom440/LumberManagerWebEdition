@@ -22,7 +22,6 @@ namespace LumberManagerWebEdition.Controllers
         }
 
         // GET: Products
-        [Authorize(Roles = IdentityHelper.Admin)]
         public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
             int pageNum = id ?? 1;
@@ -112,116 +111,6 @@ namespace LumberManagerWebEdition.Controllers
             ViewData["MaxPage"] = totalPages;
 
             return View(products);
-        }
-
-        [Authorize(Roles = IdentityHelper.Customer)]
-        public async Task<IActionResult> CustomerIndex(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
-        {
-            int pageNum = id ?? 1;
-            const int PageSize = 10;
-            ViewData["CurrentPage"] = pageNum;
-
-            List<byte> listHeight = await ProductDb.GetHeightAsync(_context);
-            List<byte> listWidth = new List<byte>();
-            List<byte> listLength = new List<byte>();
-            List<Category> listCategory = new List<Category>();
-            List<Category> listType = new List<Category>();
-            if (height != null)
-{
-                listWidth = await ProductDb.GetWidthAsync(_context, (byte)height);
-                if (width != null)
-{
-                    listLength = await ProductDb.GetLengthAsync(_context, (byte)height, (byte)width);
-                    if (length != null)
-                    {
-                        listCategory = await CategoryDb.GetCategoryAsync(_context, (byte)height, (byte)width, (byte)length);
-                        if (category != null)
-                        {
-                            listType = await CategoryDb.GetTypeAsync(_context, (byte)height, (byte)width, (byte)length, category);
-                        }
-                    }
-                }
-            }
-
-            List<Product> products;
-            int numProducts;
-
-            if (height != null && width != null && length != null && category != null && treatmentType != null)
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category, treatmentType);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length, category, treatmentType);
-            }
-            else if (height != null && width != null && length != null && category != null)
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length, category);
-            }
-            else if (height != null && width != null & length != null)
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width, (byte)length);
-            }
-            else if (height != null && width != null)
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height, (byte)width);
-            }
-            else if (height != null)
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context, (byte)height);
-            }
-            else
-            {
-                products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum);
-                numProducts = await ProductDb.GetTotalProductsAsync(_context);
-            }
-
-            ViewData["Height"] = height;
-
-            ViewData["Width"] = width;
-
-            ViewData["Length"] = length;
-
-            ViewData["Category"] = category;
-
-            ViewData["Type"] = treatmentType;
-
-            ViewData["ListHeight"] = listHeight;
-
-            ViewData["ListWidth"] = listWidth;
-
-            ViewData["ListLength"] = listLength;
-
-            ViewData["ListCategory"] = listCategory;
-
-            ViewData["ListType"] = listType;
-
-
-
-            int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
-
-            ViewData["MaxPage"] = totalPages;
-
-            return View(products);
-        }
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
         }
 
         // GET: Products/Create
