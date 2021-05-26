@@ -1,0 +1,50 @@
+﻿@model IEnumerable<LumberManagerWebEdition.Models.Product>
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<h1>Summary</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Treatment Type
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category[0].CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
