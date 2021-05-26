@@ -34,6 +34,12 @@ namespace LumberManagerWebEdition.Controllers
         public IActionResult Summary()
         {
             List<Product> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            cartProducts = cartProducts.OrderBy(p => p.Category[1].CategoryName)
+                .ThenBy(p => p.Height)
+                .ThenBy(p => p.Width)
+                .ThenBy(p => p.Length)
+                .ThenBy(p => p.Category[0].CategoryName)
+                .ToList();
             return View(cartProducts);
         }
     }
