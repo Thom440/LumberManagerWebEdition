@@ -30,5 +30,11 @@ namespace LumberManagerWebEdition.Controllers
 
             return Redirect(previousUrl);
         }
+
+        public IActionResult Summary()
+        {
+            List<Product> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            return View(cartProducts);
+        }
     }
 }
