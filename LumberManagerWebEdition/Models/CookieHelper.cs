@@ -67,7 +67,14 @@ namespace LumberManagerWebEdition.Models
         public static int GetTotalCartProducts(IHttpContextAccessor http)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(http);
-            return cartProducts.Count;
+
+            int total = 0;
+            foreach (ProductCookieHelper totalProducts in cartProducts)
+            {
+                total += totalProducts.Quantity;
+            }
+
+            return total;
         }
     }
 }
