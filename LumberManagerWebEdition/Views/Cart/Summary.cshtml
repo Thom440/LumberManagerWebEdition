@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LumberManagerWebEdition.Models.Product>
+﻿@model IEnumerable<LumberManagerWebEdition.Models.ProductCookieHelper>
 
 @{
     ViewData["Title"] = "Summary";
@@ -24,6 +24,9 @@
             <th>
                 Treatment Type
             </th>
+            <th>
+                Quantity
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +46,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category[1].CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
         </tr>
 }

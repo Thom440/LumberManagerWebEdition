@@ -11,25 +11,44 @@ namespace LumberManagerWebEdition.Models
     {
         const string CartCookie = "CartCookie";
 
-        public static List<Product> GetCartProducts(IHttpContextAccessor http)
+        public static List<ProductCookieHelper> GetCartProducts(IHttpContextAccessor http)
         {
             string existingItems = http.HttpContext.Request.Cookies[CartCookie];
 
-            List<Product> cartProducts = new List<Product>();
+            List<ProductCookieHelper> cartProducts = new List<ProductCookieHelper>();
 
             if (existingItems != null)
             {
-                cartProducts = JsonConvert.DeserializeObject<List<Product>>(existingItems);
+                cartProducts = JsonConvert.DeserializeObject<List<ProductCookieHelper>>(existingItems);
             }
 
             return cartProducts;
         }
 
-        public static void AddProductToCart(IHttpContextAccessor http, Product p)
+        public static void AddProductToCart(IHttpContextAccessor http, Product p, byte quantity)
         {
-            List<Product> cartProducts = GetCartProducts(http);
+            List<ProductCookieHelper> cartProducts = GetCartProducts(http);
 
-            cartProducts.Add(p);
+            ProductCookieHelper product = new ProductCookieHelper();
+            product.ProductID = p.ProductID;
+            product.Height = p.Height;
+            product.Width = p.Width;
+            product.Length = p.Length;
+            List<Category> categories = new List<Category>();
+            categories.Add(p.Category[0]);
+            categories.Add(p.Category[1]);
+            product.Category = categories;
+            product.Quantity = quantity;
+
+            for (int i = 0; i < cartProducts.Count; i++)
+            {
+                if (cartProducts[i] == product)
+                {
+                    return;
+                }
+            }
+
+            cartProducts.Add(product);
             string data = JsonConvert.SerializeObject(cartProducts, new JsonSerializerSettings() 
             { 
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -47,7 +66,7 @@ namespace LumberManagerWebEdition.Models
 
         public static int GetTotalCartProducts(IHttpContextAccessor http)
         {
-            List<Product> cartProducts = GetCartProducts(http);
+            List<ProductCookieHelper> cartProducts = GetCartProducts(http);
             return cartProducts.Count;
         }
     }

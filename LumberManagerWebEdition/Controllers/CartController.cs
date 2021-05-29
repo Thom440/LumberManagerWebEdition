@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,11 +21,13 @@ namespace LumberManagerWebEdition.Controllers
             _httpcontext = httpContext;
         }
 
-        public IActionResult Add(int id, string previousUrl)
+        public IActionResult Add(int id, string previousUrl, byte inputquantity)
         {
+            //byte quantity = Convert.ToByte(inputquantity);
+
             Product p = ProductDb.GetProduct(_context, id);
 
-            CookieHelper.AddProductToCart(_httpcontext, p);
+            CookieHelper.AddProductToCart(_httpcontext, p, inputquantity);
 
             TempData["Message"] = p.Height + " x " + p.Width + " x " + p.Length + " " + p.Category[0] + " " + p.Category[1] + " was added successfully.";
 
@@ -33,7 +36,7 @@ namespace LumberManagerWebEdition.Controllers
 
         public IActionResult Summary()
         {
-            List<Product> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
             cartProducts = cartProducts.OrderBy(p => p.Category[1].CategoryName)
                 .ThenBy(p => p.Height)
                 .ThenBy(p => p.Width)
