@@ -45,5 +45,11 @@ namespace LumberManagerWebEdition.Controllers
                 .ToList();
             return View(cartProducts);
         }
+
+        public IActionResult Delete(int id, string previousUrl)
+        {
+            CookieHelper.DeleteCartProducts(_httpcontext, id);
+            return Redirect(previousUrl);
+        }
     }
 }

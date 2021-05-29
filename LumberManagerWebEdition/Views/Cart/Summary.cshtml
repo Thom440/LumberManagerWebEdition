@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<LumberManagerWebEdition.Models.ProductCookieHelper>
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor http
 
 @{
     ViewData["Title"] = "Summary";
@@ -30,6 +33,9 @@
         </tr>
     </thead>
     <tbody>
+        @{ 
+            string previousUrl = http.HttpContext.Request.Path;
+        }
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -49,6 +55,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-controller="Cart" asp-action="Delete" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl">Remove</a>
             </td>
         </tr>
 }

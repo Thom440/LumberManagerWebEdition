@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,18 @@ namespace LumberManagerWebEdition.Models
             };
 
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
+        }
+
+        public static void DeleteCartProducts(IHttpContextAccessor http, int id)
+        {
+            List<ProductCookieHelper> cartProducts = GetCartProducts(http);
+            cartProducts = cartProducts.Where(p => p.ProductID != id).ToList();
+            string data = JsonConvert.SerializeObject(cartProducts, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            http.HttpContext.Response.Cookies.Append(CartCookie, data);
         }
 
         public static int GetTotalCartProducts(IHttpContextAccessor http)
