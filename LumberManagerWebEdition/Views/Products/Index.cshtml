@@ -136,7 +136,7 @@
             </div>
         </div>
         <div class="p-1">
-           <a class="btn btn-secondary" asp-action="Index" asp-route-id="1" asp-route-height=null asp-route-width="null" asp-route-length="null" asp-route-category="Category" asp-route-treatmentType="Treatment Type">Clear</a>
+            <a class="btn btn-secondary" asp-action="Index" asp-route-id="1" asp-route-height=null asp-route-width="null" asp-route-length="null" asp-route-category="Category" asp-route-treatmentType="Treatment Type">Clear</a>
         </div>
     </div>
 
@@ -177,7 +177,9 @@
             @{
                 string previousUrl = http.HttpContext.Request.Path;
             }
-
+            @{
+                int j = 0;
+            }
             @foreach (var item in Model)
             {
                 <tr>
@@ -218,11 +220,18 @@
                     else if (User.IsInRole(IdentityHelper.Customer))
                     {
                         <td>
-                            <a class="btn btn-primary" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
-                               asp-controller="Cart" asp-action="Add">Add</a>
+                            <div class="form-group">
+                                <form asp-controller="Cart" asp-action="Add" method="post">
+                                    <input type="text" name="qty" id="qty" />
+                                    <input type="hidden" name="prodId" id="prodId" value="@item.ProductID" />
+                                    <a class="btn btn-primary" type="submit" id="add" onclick="changeQuantity(this)" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
+                                       asp-route-inputquantity="0" asp-controller="Cart" asp-action="Add" >Add</a>
+                                </form>
+                            </div>
                         </td>
                     }
                 </tr>
+                j++;
             }
         </tbody>
     </table>
@@ -246,8 +255,10 @@
 
         }
     </ul>
+    
 }
 else
 {
     <h1 class="text-danger">Log in or register to see Products.</h1>
 }
+<script src="~/js/AddToCart.js"></script>
