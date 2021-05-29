@@ -43,9 +43,13 @@ namespace LumberManagerWebEdition.Models
 
             for (int i = 0; i < cartProducts.Count; i++)
             {
-                if (cartProducts[i] == product)
+                if (cartProducts[i].ProductID == product.ProductID && cartProducts[i].Quantity == quantity)
                 {
                     return;
+                }
+                else if (cartProducts[i].ProductID == product.ProductID && cartProducts[i].Quantity != quantity)
+                {
+                    cartProducts = DeleteCartProducts(http, product.ProductID);
                 }
             }
 
@@ -65,7 +69,7 @@ namespace LumberManagerWebEdition.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
-        public static void DeleteCartProducts(IHttpContextAccessor http, int id)
+        public static List<ProductCookieHelper> DeleteCartProducts(IHttpContextAccessor http, int id)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(http);
             cartProducts = cartProducts.Where(p => p.ProductID != id).ToList();
@@ -75,6 +79,7 @@ namespace LumberManagerWebEdition.Models
             });
 
             http.HttpContext.Response.Cookies.Append(CartCookie, data);
+            return cartProducts;
         }
 
         public static int GetTotalCartProducts(IHttpContextAccessor http)
