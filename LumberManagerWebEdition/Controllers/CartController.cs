@@ -37,13 +37,15 @@ namespace LumberManagerWebEdition.Controllers
         public IActionResult Summary()
         {
             List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
-            cartProducts = cartProducts.OrderBy(p => p.Category[1].CategoryName)
-                .ThenBy(p => p.Height)
-                .ThenBy(p => p.Width)
-                .ThenBy(p => p.Length)
-                .ThenBy(p => p.Category[0].CategoryName)
-                .ToList();
-            return View(cartProducts);
+            List<Product> products = new List<Product>();
+            List<int> quantity = new List<int>();
+            for (int i = 0; i < cartProducts.Count; i++)
+            {
+                products.Add(ProductDb.GetProduct(_context, cartProducts[i].ProductID));
+                quantity.Add(cartProducts[i].Quantity);
+            }
+            ViewData["Quantity"] = quantity;
+            return View(products);
         }
 
         public IActionResult Delete(int id, string previousUrl)

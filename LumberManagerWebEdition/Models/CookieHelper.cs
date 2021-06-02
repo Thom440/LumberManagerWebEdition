@@ -32,13 +32,6 @@ namespace LumberManagerWebEdition.Models
 
             ProductCookieHelper product = new ProductCookieHelper();
             product.ProductID = p.ProductID;
-            product.Height = p.Height;
-            product.Width = p.Width;
-            product.Length = p.Length;
-            List<Category> categories = new List<Category>();
-            categories.Add(p.Category[0]);
-            categories.Add(p.Category[1]);
-            product.Category = categories;
             product.Quantity = quantity;
 
             for (int i = 0; i < cartProducts.Count; i++)
