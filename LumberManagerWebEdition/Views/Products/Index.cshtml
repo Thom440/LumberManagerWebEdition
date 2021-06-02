@@ -226,23 +226,23 @@
                                     @{
                                         bool isCartValid = false;
                                     }
-                                     <button class="btn btn-primary rounded-circle" type="submit" id="add" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
+                                     <button class="btn btn-primary rounded-circle subtract-button" type="submit" id="subtract" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
                                      asp-route-inputquantity="0" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">-</button>
                                     @for (int i = 0; i < cartProducts.Count; i++)
                                     {
                                         if (item.ProductID == cartProducts[i].ProductID)
                                         {
-                                            <input type="text" name="qty" id="qty" value="@cartProducts[i].Quantity" disabled />
+                                            <input type="text" name="qty" id="qty" value="@cartProducts[i].Quantity" />
                                             isCartValid = true;
                                             break;
                                         }
                                     }
                                     @if (!isCartValid)
                                     {
-                                        <input type="text" name="qty" id="qty" value="0" disabled />
+                                        <input type="text" name="qty" id="qty" value="0" />
                                     }
                                     <input type="hidden" name="prodId" id="prodId" value="@item.ProductID" />
-                                    <a class="btn btn-primary rounded-circle" type="submit" id="add" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
+                                    <a class="btn btn-primary rounded-circle add-button" type="submit" id="add" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
                                        asp-route-inputquantity="0" asp-controller="Cart" asp-action="Add" onclick="addQuantity()">+</a>
                                 </form>
                             </div>
