@@ -227,7 +227,7 @@
                                         bool isCartValid = false;
                                     }
                                      <button class="btn btn-primary rounded-circle subtract-button" type="submit" id="subtract" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
-                                     asp-route-inputquantity="0" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">-</button>
+                                     asp-route-inputquantity="temp" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">-</button>
                                     @for (int i = 0; i < cartProducts.Count; i++)
                                     {
                                         if (item.ProductID == cartProducts[i].ProductID)
@@ -243,7 +243,7 @@
                                     }
                                     <input type="hidden" name="prodId" id="prodId" value="@item.ProductID" />
                                     <a class="btn btn-primary rounded-circle add-button" type="submit" id="add" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
-                                       asp-route-inputquantity="0" asp-controller="Cart" asp-action="Add" onclick="addQuantity()">+</a>
+                                       asp-route-inputquantity="temp" asp-controller="Cart" asp-action="Add" onclick="addQuantity()">+</a>
                                 </form>
                             </div>
                         </td>

@@ -26,7 +26,7 @@ function subtractQuantity() {
     let num = parseInt(input);
     let url = $(this).attr("formaction");
     num = num - 1;
-    url = url.replace("0", num);
+    url = url.replace("temp", num);
     $(this).attr("formaction", url);
 }
 
@@ -35,6 +35,6 @@ function addQuantity() {
     let num = parseInt(input);
     let url = $(this).attr("href");
     num = num + 1;
-    url = url.replace("0", num);
+    url = url.replace("temp", num);
     $(this).attr("href", url);
 }
