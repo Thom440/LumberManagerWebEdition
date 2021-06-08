@@ -15,6 +15,9 @@
     onSubmit.onclick = validateCheckboxes;
 }
 
+/**
+ * Checks to see which checkboxes are checked.
+ **/
 function validateCheckboxes() {
     let isValid = false;
     if ($("#ww").prop("checked")) {
@@ -41,6 +44,9 @@ function validateCheckboxes() {
     }
 }
 
+/**
+ * Disables incompatable type checkboxes.
+ **/
 function disableCheckBoxes() {
     if (this == document.getElementById("ww")) {
         if (this.checked) {

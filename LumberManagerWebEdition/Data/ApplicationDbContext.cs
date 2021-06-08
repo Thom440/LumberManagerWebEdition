@@ -19,6 +19,10 @@ namespace LumberManagerWebEdition.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderLineItems> OrderLineItems { get; set; }
+
+        /// <summary>
+        /// Setting keys for the order line items and entering seed data for categories.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

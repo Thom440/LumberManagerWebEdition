@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace LumberManagerWebEdition.Controllers
 {
+    /// <summary>
+    /// A controller for the cart.
+    /// Adding and changing quantities of products in the cart.
+    /// </summary>
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,10 +25,14 @@ namespace LumberManagerWebEdition.Controllers
             _httpcontext = httpContext;
         }
 
+        /// <summary>
+        /// Adds a product to the cart.
+        /// </summary>
+        /// <param name="id">Product ID to be added.</param>
+        /// <param name="previousUrl">Redirect to where user was.</param>
+        /// <param name="inputquantity">Amount of product to be added to cart.</param>
         public IActionResult Add(int id, string previousUrl, byte inputquantity)
         {
-            //byte quantity = Convert.ToByte(inputquantity);
-
             Product p = ProductDb.GetProduct(_context, id);
 
             CookieHelper.AddProductToCart(_httpcontext, p, inputquantity);
@@ -34,6 +42,9 @@ namespace LumberManagerWebEdition.Controllers
             return Redirect(previousUrl);
         }
 
+        /// <summary>
+        /// View that shows the products in the cart.
+        /// </summary>
         public IActionResult Summary()
         {
             List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
@@ -48,6 +59,12 @@ namespace LumberManagerWebEdition.Controllers
             return View(products);
         }
 
+        /// <summary>
+        /// Deletes product from cart.
+        /// </summary>
+        /// <param name="id">Product ID.</param>
+        /// <param name="previousUrl">Redirect to where user was.</param>
+        /// <returns></returns>
         public IActionResult Delete(int id, string previousUrl)
         {
             CookieHelper.DeleteCartProducts(_httpcontext, id);

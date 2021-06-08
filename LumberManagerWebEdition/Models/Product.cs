@@ -44,6 +44,9 @@ namespace LumberManagerWebEdition.Models
             return Height + " x " + Width + " x " + Length + " In Stock " + OnHand + " Sold " + Sold + " " + String.Join(" ", Category);
         }
 
+        /// <summary>
+        /// A ToString() method to be displayed on orders.
+        /// </summary>
         public string OrderDisplayString()
         {
             if (Category[1].CategoryName == "N/A")
