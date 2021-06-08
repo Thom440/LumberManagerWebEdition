@@ -8,10 +8,18 @@ using System.Threading.Tasks;
 
 namespace LumberManagerWebEdition.Models
 {
+    /// <summary>
+    /// A class to instantiate a Cookie.
+    /// </summary>
     public class CookieHelper
     {
         const string CartCookie = "CartCookie";
 
+        /// <summary>
+        /// Grabs all products stored in the Cookie.
+        /// </summary>
+        /// <param name="http"></param>
+        /// <returns></returns>
         public static List<ProductCookieHelper> GetCartProducts(IHttpContextAccessor http)
         {
             string existingItems = http.HttpContext.Request.Cookies[CartCookie];
@@ -26,6 +34,12 @@ namespace LumberManagerWebEdition.Models
             return cartProducts;
         }
 
+        /// <summary>
+        /// Adds product to the Cookie.
+        /// </summary>
+        /// <param name="http"></param>
+        /// <param name="p">The product.</param>
+        /// <param name="quantity">Amount of the product to add.</param>
         public static void AddProductToCart(IHttpContextAccessor http, Product p, byte quantity)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(http);
@@ -62,6 +76,11 @@ namespace LumberManagerWebEdition.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
+        /// <summary>
+        /// Removes product form Cookie.
+        /// </summary>
+        /// <param name="http"></param>
+        /// <param name="id">Product Id.</param>
         public static List<ProductCookieHelper> DeleteCartProducts(IHttpContextAccessor http, int id)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(http);
@@ -75,6 +94,10 @@ namespace LumberManagerWebEdition.Models
             return cartProducts;
         }
 
+        /// <summary>
+        /// Grabs the quantity of all the products that are in the Cookie.
+        /// </summary>
+        /// <param name="http"></param>
         public static int GetTotalCartProducts(IHttpContextAccessor http)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(http);

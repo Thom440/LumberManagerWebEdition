@@ -1,17 +1,4 @@
 ﻿
-function changeQuantity() {
-    let input = $(this).siblings("#qty").val();
-    let url = $(this).attr("href");
-    if (this.value == "-") {
-        input = input - 1;
-    }
-    else {
-        input = input + 1;
-    }
-    url = url.replace("0", input);
-    $(this).attr("href", url);
-}
-
 window.onload = function () {
     let subtract = $(".subtract-button");
     let add = $(".add-button");
@@ -19,6 +6,9 @@ window.onload = function () {
     subtract.on("click", subtractQuantity)
 }
 
+/**
+ * Subtracts quantity by 1 product from cart.
+ **/
 function subtractQuantity() {
     console.log(this);
     console.log($(this).siblings());
@@ -30,6 +20,9 @@ function subtractQuantity() {
     $(this).attr("formaction", url);
 }
 
+/**
+ * Adds quantity by 1 product from cart.
+ **/
 function addQuantity() {
     let input = $(this).siblings("#qty").val();
     let num = parseInt(input);

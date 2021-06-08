@@ -3,7 +3,11 @@
 @inject IHttpContextAccessor http
 @{
     ViewData["Title"] = "Index";
+
+    // List of products in the Cookie.
     var cartProducts = (List<ProductCookieHelper>)ViewData["CartProducts"];
+
+    // List for filtering.
     var listHeight = (List<byte>)ViewData["ListHeight"];
     var listWidth = (List<byte>)ViewData["ListWidth"];
     var listLength = (List<byte>)ViewData["ListLength"];
@@ -226,6 +230,7 @@
                                     @{
                                         bool isCartValid = false;
                                     }
+                                    <!-- Setting asp-route-inputquantity to "temp" so it is easy to change the href within JavaScript.-->
                                      <button class="btn btn-primary rounded-circle subtract-button" type="submit" id="subtract" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
                                      asp-route-inputquantity="temp" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">-</button>
                                     @for (int i = 0; i < cartProducts.Count; i++)

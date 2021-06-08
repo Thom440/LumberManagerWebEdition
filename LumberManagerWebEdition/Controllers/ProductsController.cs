@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace LumberManagerWebEdition.Controllers
 {
+    /// <summary>
+    /// Controller that allows Add, Edit, Delete products to Database.
+    /// </summary>
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,7 +27,15 @@ namespace LumberManagerWebEdition.Controllers
             _httpContext = httpContext;
         }
 
-        // GET: Products
+        /// <summary>
+        /// Displays the list of products in the database. 
+        /// </summary>
+        /// <param name="id">Product ID.</param>
+        /// <param name="height">Height of a product.</param>
+        /// <param name="width">Width of a product.</param>
+        /// <param name="length">Length of a product.</param>
+        /// <param name="category">Category of a product.</param>
+        /// <param name="treatmentType">Treatment type of a product.</param>
         public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
             int pageNum = id ?? 1;
@@ -36,6 +47,8 @@ namespace LumberManagerWebEdition.Controllers
             List<byte> listLength = new List<byte>();
             List<Category> listCategory = new List<Category>();
             List<Category> listType = new List<Category>();
+            
+            // Getting values for filtered drop down boxes.
             if (height != null)
             {
                 listWidth = await ProductDb.GetWidthAsync(_context, (byte)height);
@@ -56,6 +69,7 @@ namespace LumberManagerWebEdition.Controllers
             List<Product> products;
             int numProducts;
 
+            // Getting products based off filter preferences.
             if (height != null && width != null && length != null && category != null && treatmentType != null)
             {
                 products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category, treatmentType);
@@ -120,7 +134,9 @@ namespace LumberManagerWebEdition.Controllers
             return View(products);
         }
 
-        // GET: Products/Create
+        /// <summary>
+        /// GET : Adds a product to the database.
+        /// </summary>
         [Authorize(Roles = IdentityHelper.Admin)]
         [HttpGet]
         public IActionResult Create()
@@ -141,9 +157,10 @@ namespace LumberManagerWebEdition.Controllers
             return View(createProductViewModel);
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST : for Create // Adds product to database.
+        /// </summary>
+        /// <param name="createProductViewModel"></param>
         [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -157,6 +174,8 @@ namespace LumberManagerWebEdition.Controllers
                 bool six0Selected = (Request.Form[".60"] == ".60") ? true : false;
                 bool acqSelected = (Request.Form["acq"] == "ACQ") ? true : false;
                 bool ccaSelected = (Request.Form["cca"] == "CCA") ? true : false;
+
+                // Checking which checkboxes are checked to set category and treatment type.
                 if (wwSelected)
                 {
                     createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 1));
@@ -195,6 +214,8 @@ namespace LumberManagerWebEdition.Controllers
                         createProductViewModel.Product.Category.Add(CategoryDb.GetCategory(_context, 6));
                     }
                 }
+
+                // Checking to make sure that the product is NOT in the database.
                 if (!(ProductDb.CheckForExistingProduct(_context, createProductViewModel.Product)))
                 {
                     await ProductDb.AddProductAsync(_context, createProductViewModel.Product);
@@ -210,7 +231,10 @@ namespace LumberManagerWebEdition.Controllers
             return View(createProductViewModel);
         }
 
-        // GET: Products/Edit/5
+        /// <summary>
+        /// GET : Edits/Updates product in the database.
+        /// </summary>
+        /// <param name="id">ID of product.</param>
         [Authorize(Roles = IdentityHelper.Admin)]
         public IActionResult UpdateInventory(int? id)
         {
@@ -227,9 +251,12 @@ namespace LumberManagerWebEdition.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST : Edits/Updates product in the database.
+        /// </summary>
+        /// <param name="id">ID of product.</param>
+        /// <param name="product">The product.</param>
+        /// <returns></returns>
         [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -262,7 +289,10 @@ namespace LumberManagerWebEdition.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
+        /// <summary>
+        /// GET : Loads the delete page with the product ID.
+        /// </summary>
+        /// <param name="id">Product ID</param>
         [Authorize(Roles = IdentityHelper.Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -281,7 +311,11 @@ namespace LumberManagerWebEdition.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
+        /// <summary>
+        /// POST : Deletes the product.
+        /// </summary>
+        /// <param name="id">Product ID.</param>
+        /// <returns></returns>
         [Authorize(Roles = IdentityHelper.Admin)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
