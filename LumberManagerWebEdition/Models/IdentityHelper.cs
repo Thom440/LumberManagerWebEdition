@@ -86,10 +86,10 @@ namespace LumberManagerWebEdition.Models
                     Business = business
                 };
 
-                // Create instructor
+                // Create admin
                 await userManager.CreateAsync(admin, password);
 
-                // Add to instructor role
+                // Add to admin role
                 await userManager.AddToRoleAsync(admin, Admin);
             }
         }
