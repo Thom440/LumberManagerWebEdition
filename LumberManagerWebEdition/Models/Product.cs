@@ -30,6 +30,12 @@ namespace LumberManagerWebEdition.Models
         public byte Length { get; set; }
 
         /// <summary>
+        /// The total board footage of a unit
+        /// </summary>
+        [Required]
+        public int BoardFeet { get; set; }
+
+        /// <summary>
         /// The amount in the inventory. Default is zero
         /// </summary>
         public short OnHand { get; set; } = 0;
