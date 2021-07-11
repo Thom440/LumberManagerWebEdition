@@ -202,7 +202,7 @@ namespace LumberManagerWebEdition.Data
 
             builder.Entity<Product>().HasData(new Product { ProductID = 71, Height = 4, Width = 4, Length = 8, BoardFeet = 971 });
             builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 1, ProductsProductID = 71 }, new { CategoryID = 7, ProductsProductID = 71 }));
-            builder.Entity<Product>().HasData(new Product { ProductID = 71, Height = 4, Width = 4, Length = 10, BoardFeet = 1213 });
+            builder.Entity<Product>().HasData(new Product { ProductID = 72, Height = 4, Width = 4, Length = 10, BoardFeet = 1213 });
             builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 1, ProductsProductID = 72 }, new { CategoryID = 7, ProductsProductID = 72 }));
             builder.Entity<Product>().HasData(new Product { ProductID = 73, Height = 4, Width = 4, Length = 12, BoardFeet = 1456 });
             builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 1, ProductsProductID = 73 }, new { CategoryID = 7, ProductsProductID = 73 }));
