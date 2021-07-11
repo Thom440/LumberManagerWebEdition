@@ -440,6 +440,81 @@ namespace LumberManagerWebEdition.Data
             builder.Entity<Product>().HasData(new Product { ProductID = 182, Height = 2, Width = 12, Length = 20, BoardFeet = 1280 });
             builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 182 }, new { CategoryID = 5, ProductsProductID = 182 }));
 
+            builder.Entity<Product>().HasData(new Product { ProductID = 183, Height = 4, Width = 4, Length = 8, BoardFeet = 971 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 183 }, new { CategoryID = 5, ProductsProductID = 183 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 184, Height = 4, Width = 4, Length = 10, BoardFeet = 1213 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 184 }, new { CategoryID = 5, ProductsProductID = 184 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 185, Height = 4, Width = 4, Length = 12, BoardFeet = 1456 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 185 }, new { CategoryID = 5, ProductsProductID = 185 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 186, Height = 4, Width = 4, Length = 14, BoardFeet = 1699 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 186 }, new { CategoryID = 5, ProductsProductID = 186 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 187, Height = 4, Width = 4, Length = 16, BoardFeet = 1941 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 187 }, new { CategoryID = 5, ProductsProductID = 187 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 188, Height = 4, Width = 4, Length = 18, BoardFeet = 2184 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 188 }, new { CategoryID = 5, ProductsProductID = 188 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 189, Height = 4, Width = 4, Length = 20, BoardFeet = 2427 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 189 }, new { CategoryID = 5, ProductsProductID = 189 }));
+
+            builder.Entity<Product>().HasData(new Product { ProductID = 190, Height = 4, Width = 6, Length = 8, BoardFeet = 896 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 190 }, new { CategoryID = 5, ProductsProductID = 190 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 191, Height = 4, Width = 6, Length = 10, BoardFeet = 1120 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 191 }, new { CategoryID = 5, ProductsProductID = 191 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 192, Height = 4, Width = 6, Length = 12, BoardFeet = 1344 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 192 }, new { CategoryID = 5, ProductsProductID = 192 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 193, Height = 4, Width = 6, Length = 14, BoardFeet = 1568 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 193 }, new { CategoryID = 5, ProductsProductID = 193 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 194, Height = 4, Width = 6, Length = 16, BoardFeet = 1792 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 194 }, new { CategoryID = 5, ProductsProductID = 194 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 195, Height = 4, Width = 6, Length = 18, BoardFeet = 2016 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 195 }, new { CategoryID = 5, ProductsProductID = 195 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 196, Height = 4, Width = 6, Length = 20, BoardFeet = 2240 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 196 }, new { CategoryID = 5, ProductsProductID = 196 }));
+
+            builder.Entity<Product>().HasData(new Product { ProductID = 197, Height = 4, Width = 8, Length = 8, BoardFeet = 512 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 197 }, new { CategoryID = 5, ProductsProductID = 197 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 198, Height = 4, Width = 8, Length = 10, BoardFeet = 640 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 198 }, new { CategoryID = 5, ProductsProductID = 198 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 199, Height = 4, Width = 8, Length = 12, BoardFeet = 768 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 199 }, new { CategoryID = 5, ProductsProductID = 199 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 200, Height = 4, Width = 8, Length = 14, BoardFeet = 896 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 200 }, new { CategoryID = 5, ProductsProductID = 200 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 201, Height = 4, Width = 8, Length = 16, BoardFeet = 1024 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 201 }, new { CategoryID = 5, ProductsProductID = 201 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 202, Height = 4, Width = 8, Length = 18, BoardFeet = 1152 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 202 }, new { CategoryID = 5, ProductsProductID = 202 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 203, Height = 4, Width = 8, Length = 20, BoardFeet = 1280 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 203 }, new { CategoryID = 5, ProductsProductID = 203 }));
+
+            builder.Entity<Product>().HasData(new Product { ProductID = 204, Height = 4, Width = 10, Length = 8, BoardFeet = 534 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 204 }, new { CategoryID = 5, ProductsProductID = 204 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 205, Height = 4, Width = 10, Length = 10, BoardFeet = 667 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 205 }, new { CategoryID = 5, ProductsProductID = 205 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 206, Height = 4, Width = 10, Length = 12, BoardFeet = 800 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 206 }, new { CategoryID = 5, ProductsProductID = 206 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 207, Height = 4, Width = 10, Length = 14, BoardFeet = 934 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 207 }, new { CategoryID = 5, ProductsProductID = 207 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 208, Height = 4, Width = 10, Length = 16, BoardFeet = 1067 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 208 }, new { CategoryID = 5, ProductsProductID = 208 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 209, Height = 4, Width = 10, Length = 18, BoardFeet = 1200 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 209 }, new { CategoryID = 5, ProductsProductID = 209 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 210, Height = 4, Width = 10, Length = 20, BoardFeet = 1334 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 210 }, new { CategoryID = 5, ProductsProductID = 210 }));
+
+            builder.Entity<Product>().HasData(new Product { ProductID = 211, Height = 4, Width = 12, Length = 8, BoardFeet = 512 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 211 }, new { CategoryID = 5, ProductsProductID = 211 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 212, Height = 4, Width = 12, Length = 10, BoardFeet = 640 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 212 }, new { CategoryID = 5, ProductsProductID = 212 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 213, Height = 4, Width = 12, Length = 12, BoardFeet = 768 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 213 }, new { CategoryID = 5, ProductsProductID = 213 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 214, Height = 4, Width = 12, Length = 14, BoardFeet = 896 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 214 }, new { CategoryID = 5, ProductsProductID = 214 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 215, Height = 4, Width = 12, Length = 16, BoardFeet = 1024 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 215 }, new { CategoryID = 5, ProductsProductID = 215 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 216, Height = 4, Width = 12, Length = 18, BoardFeet = 1152 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 216 }, new { CategoryID = 5, ProductsProductID = 216 }));
+            builder.Entity<Product>().HasData(new Product { ProductID = 217, Height = 4, Width = 12, Length = 20, BoardFeet = 1280 });
+            builder.Entity<Product>().HasMany(p => p.Category).WithMany(c => c.Products).UsingEntity(junctionTable => junctionTable.HasData(new { CategoryID = 3, ProductsProductID = 217 }, new { CategoryID = 5, ProductsProductID = 217 }));
+
         }
     }
 }
