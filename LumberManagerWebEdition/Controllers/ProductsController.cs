@@ -39,7 +39,7 @@ namespace LumberManagerWebEdition.Controllers
         public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
             int pageNum = id ?? 1;
-            const int PageSize = 10;
+            const int PageSize = 20;
             ViewData["CurrentPage"] = pageNum;
 
             List<byte> listHeight = await ProductDb.GetHeightAsync(_context);
