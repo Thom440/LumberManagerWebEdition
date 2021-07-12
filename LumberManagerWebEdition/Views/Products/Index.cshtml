@@ -13,7 +13,13 @@
     var listLength = (List<byte>)ViewData["ListLength"];
     var listCategory = (List<Category>)ViewData["ListCategory"];
     var listType = (List<Category>)ViewData["ListType"];
+    var weather = (WeatherAPI)ViewData["Weather"];
 }
+
+<img alt="Weather Icon" src="@weather.WeatherIcon"/>
+<span >@weather.City</span>
+Temperature(Feels Like)&nbsp;<label >@(Convert.ToInt32((Convert.ToDouble(weather.TempFeelsLike) * 9 / 5 + 32)))</label>
+Temperature <label>@(Convert.ToInt32((Convert.ToDouble(weather.Temp) * 9 / 5 + 32)))</label>
 
 @if (TempData["Message"] != null)
 {
@@ -231,8 +237,10 @@
                                         bool isCartValid = false;
                                     }
                                     <!-- Setting asp-route-inputquantity to "temp" so it is easy to change the href within JavaScript.-->
-                                     <button class="btn btn-primary rounded-circle subtract-button" type="submit" id="subtract" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
-                                     asp-route-inputquantity="temp" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">-</button>
+                                    <button class="btn btn-primary rounded-circle subtract-button" type="submit" id="subtract" asp-route-id="@item.ProductID" asp-route-previousUrl="@previousUrl"
+                                            asp-route-inputquantity="temp" asp-controller="Cart" asp-action="Add" onclick="subtractQuantity()">
+                                        -
+                                    </button>
                                     @for (int i = 0; i < cartProducts.Count; i++)
                                     {
                                         if (item.ProductID == cartProducts[i].ProductID)
@@ -278,7 +286,7 @@
 
         }
     </ul>
-    
+
 }
 else
 {
