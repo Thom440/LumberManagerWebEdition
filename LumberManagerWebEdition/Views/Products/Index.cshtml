@@ -16,7 +16,7 @@
     var weather = (WeatherAPI)ViewData["Weather"];
 }
 
-<img alt="Weather Icon" src="@weather.WeatherIcon"/>
+<img alt="Weather Icon" src="@string.Format("http://openweathermap.org/img/wn/{0}@2x.png", @weather.WeatherIcon)"/>
 <span >@weather.City</span>
 Temperature(Feels Like)&nbsp;<label >@(Convert.ToInt32((Convert.ToDouble(weather.TempFeelsLike) * 9 / 5 + 32)))</label>
 Temperature <label>@(Convert.ToInt32((Convert.ToDouble(weather.Temp) * 9 / 5 + 32)))</label>
