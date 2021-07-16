@@ -128,8 +128,6 @@ namespace LumberManagerWebEdition.Controllers
 
             ViewData["ListType"] = listType;
 
-            ViewData["Weather"] = GetWeather.weather;
-
 
 
             int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
