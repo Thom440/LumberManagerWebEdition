@@ -110,5 +110,19 @@ namespace LumberManagerWebEdition.Models
 
             return total;
         }
+
+        public static bool CheckForExistingProduct(IHttpContextAccessor http, int id)
+        {
+            List<ProductCookieHelper> cartProducts = GetCartProducts(http);
+
+            for (int i = 0; i < cartProducts.Count; i++)
+            {
+                if (cartProducts[i].ProductID == id && cartProducts[i].Quantity > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

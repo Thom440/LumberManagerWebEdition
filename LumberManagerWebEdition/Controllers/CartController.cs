@@ -35,9 +35,21 @@ namespace LumberManagerWebEdition.Controllers
         {
             Product p = ProductDb.GetProduct(_context, id);
 
-            CookieHelper.AddProductToCart(_httpcontext, p, inputquantity);
+            if (inputquantity > 0)
+            {
+                CookieHelper.AddProductToCart(_httpcontext, p, inputquantity);
+                TempData["Message"] = p.Height + " x " + p.Width + " x " + p.Length + " " + p.Category[0] + " " + p.Category[1] + " was added successfully.";
+            }
+            else
+            {
+                bool isTrue = CookieHelper.CheckForExistingProduct(_httpcontext, id);
+                CookieHelper.DeleteCartProducts(_httpcontext, id);
 
-            TempData["Message"] = p.Height + " x " + p.Width + " x " + p.Length + " " + p.Category[0] + " " + p.Category[1] + " was added successfully.";
+                if (isTrue)
+                {
+                    TempData["Message"] = p.Height + " x " + p.Width + " x " + p.Length + " " + p.Category[0] + " " + p.Category[1] + " was removed.";
+                }
+            }
 
             return Redirect(previousUrl);
         }
