@@ -31,19 +31,13 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 15px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
-}
-
-@media (min-width: 986px) {
-    html {
-        font-size: 16px;
-    }
 }
 
 .border-top {
