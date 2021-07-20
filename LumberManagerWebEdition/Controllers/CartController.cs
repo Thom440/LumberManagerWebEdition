@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace LumberManagerWebEdition.Controllers
 {
@@ -18,11 +20,14 @@ namespace LumberManagerWebEdition.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpcontext;
+        private readonly UserManager<User> _userManager;
 
-        public CartController(ApplicationDbContext context, IHttpContextAccessor httpContext)
+        public CartController(ApplicationDbContext context, IHttpContextAccessor httpContext, UserManager<User> userManager)
         {
+            
             _context = context;
             _httpcontext = httpContext;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -69,6 +74,49 @@ namespace LumberManagerWebEdition.Controllers
             }
             ViewData["Quantity"] = quantity;
             return View(products);
+        }
+
+        public async Task<IActionResult> Confirm()
+        {
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User user = await _userManager.FindByIdAsync(currentUserId);
+
+            int totalProducts = CookieHelper.GetTotalCartProducts(_httpcontext);
+
+            ViewData["Cart"] = totalProducts;
+            return View(user);
+        }
+
+        public async Task<IActionResult> Submit()
+        {
+            string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            List<Product> products = new List<Product>();
+            List<short> quantity = new List<short>();
+            for (int i = 0; i < cartProducts.Count; i++)
+            {
+                products.Add(ProductDb.GetProduct(_context, cartProducts[i].ProductID));
+                quantity.Add(cartProducts[i].Quantity);
+            }
+
+            OrderLineItems orderLineItem = new OrderLineItems();
+            Order newOrder = new Order();
+            newOrder.InvoiceDate = DateTime.Now;
+            newOrder.Customers.Add(user);
+            OrderDB.AddOrder(_context, newOrder);
+
+            for (int i = 0; i < products.Count; i++)
+            {
+                orderLineItem.OrderID = newOrder.OrderID;
+                orderLineItem.ProductID = products[i].ProductID;
+                orderLineItem.Quantity = quantity[i];
+                OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
+            }
+            CookieHelper.DeleteCookie(_httpcontext);
+
+            return View();
         }
 
         /// <summary>
