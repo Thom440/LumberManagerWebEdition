@@ -8,6 +8,10 @@ namespace LumberManagerWebEdition.Data
 {
     public static class OrderDB
     {
+        /// <summary>
+        /// Adds order to the database
+        /// </summary>
+        /// <param name="o">The order to be added</param>
         public static void AddOrder(ApplicationDbContext _context, Order o)
         {
             _context.Orders.Add(o);

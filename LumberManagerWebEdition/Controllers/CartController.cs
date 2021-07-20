@@ -76,6 +76,9 @@ namespace LumberManagerWebEdition.Controllers
             return View(products);
         }
 
+        /// <summary>
+        /// The confirmation page that is shown before order is submitted
+        /// </summary>
         public async Task<IActionResult> Confirm()
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -87,6 +90,12 @@ namespace LumberManagerWebEdition.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// Creates an order based off of the cookie
+        /// Once the order is created the cookie is deleted
+        /// and the submit page is shown
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Submit()
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
