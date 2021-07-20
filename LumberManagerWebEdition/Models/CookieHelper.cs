@@ -76,6 +76,9 @@ namespace LumberManagerWebEdition.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
+        /// <summary>
+        /// Sets the cookie expiration date to last year to delete the cookie
+        /// </summary>
         public static void DeleteCookie(IHttpContextAccessor _http)
         {
             List<ProductCookieHelper> cartProducts = GetCartProducts(_http);

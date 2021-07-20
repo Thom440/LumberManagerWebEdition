@@ -8,6 +8,10 @@ namespace LumberManagerWebEdition.Data
 {
     public static class UserDB
     {
+        /// <summary>
+        /// Gets the current user
+        /// </summary>
+        /// <param name="id">The user id</param>
         public static User GetUser(ApplicationDbContext _context, string id)
         {
 
@@ -17,6 +21,10 @@ namespace LumberManagerWebEdition.Data
             return user;
         }
 
+        /// <summary>
+        /// Adds user to the database for orders
+        /// </summary>
+        /// <param name="u">The user to be added</param>
         public static async Task AddUserAsync(ApplicationDbContext _context, User u)
         {
             // Adds user to database
