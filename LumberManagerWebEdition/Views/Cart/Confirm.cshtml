@@ -1,0 +1,49 @@
+﻿@model LumberManagerWebEdition.Models.User
+@{
+    ViewData["Title"] = "Confirm";
+    int totalCartProducts = (int)ViewData["Cart"];
+}
+
+<h1>Confirm Order</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="confirm" asp-action="Confirm">
+            <h2>Shipping & Billing Address</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Business" class="control-label">Business</label>
+                <p class="form-control">@Model.Business</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ContactFirstName" class="control-label">First Name</label>
+                <p class="form-control">@Model.ContactFirstName</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactLastName" class="control-label">Last Name</label>
+                <p class="form-control">@Model.ContactLastName</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label">Street Address</label>
+                <p class="form-control">@Model.Address</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label">City</label>
+                <p class="form-control">@Model.City</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label">State</label>
+                <p class="form-control">@Model.State</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZipCode" class="control-label">Zip Code</label>
+                <p class="form-control">@Model.ZipCode</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Total products in cart</label>
+                <p class="form-control">@totalCartProducts</p>
+            </div>
+        </form>
+    </div>
+</div>
+<a class="btn btn-primary" asp-controller="Cart" asp-action="Submit">Submit Order</a>

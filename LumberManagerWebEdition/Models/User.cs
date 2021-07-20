@@ -10,7 +10,7 @@ namespace LumberManagerWebEdition.Models
     public class User : IdentityUser
     {
         [Key]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
 
         /// <summary>
         /// If applicable, the name of the business. (nullable)

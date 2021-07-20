@@ -76,6 +76,24 @@ namespace LumberManagerWebEdition.Models
             http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
         }
 
+        public static void DeleteCookie(IHttpContextAccessor _http)
+        {
+            List<ProductCookieHelper> cartProducts = GetCartProducts(_http);
+            CookieOptions options = new CookieOptions()
+            {
+                Expires = DateTime.Now.AddYears(-1),
+                Secure = true,
+                IsEssential = true
+            };
+
+            string data = JsonConvert.SerializeObject(cartProducts, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            _http.HttpContext.Response.Cookies.Append(CartCookie, data, options);
+        }
+
         /// <summary>
         /// Removes product form Cookie.
         /// </summary>
