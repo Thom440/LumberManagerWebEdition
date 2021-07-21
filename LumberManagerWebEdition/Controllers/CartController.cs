@@ -22,6 +22,8 @@ namespace LumberManagerWebEdition.Controllers
         private readonly IHttpContextAccessor _httpcontext;
         private readonly UserManager<User> _userManager;
 
+        private const double PricePer1000 = 1100.0;
+
         public CartController(ApplicationDbContext context, IHttpContextAccessor httpContext, UserManager<User> userManager)
         {
             
