@@ -84,11 +84,31 @@ namespace LumberManagerWebEdition.Controllers
         public async Task<IActionResult> Confirm()
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             User user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            List<Product> products = new List<Product>();
+            List<int> quantity = new List<int>();
+            for (int i = 0; i < cartProducts.Count; i++)
+            {
+                products.Add(ProductDb.GetProduct(_context, cartProducts[i].ProductID));
+                quantity.Add(cartProducts[i].Quantity);
+            }
+
+            double totalPrice = 0.0;
+
+            for (int i = 0; i < products.Count; i++)
+            {
+                int boardFeet = products[i].BoardFeet * quantity[i];
+                double difference = boardFeet * .1;
+                totalPrice = difference + boardFeet;
+            }
 
             int totalProducts = CookieHelper.GetTotalCartProducts(_httpcontext);
 
             ViewData["Cart"] = totalProducts;
+            ViewData["Total Price"] = totalPrice; 
             return View(user);
         }
 
@@ -123,6 +143,7 @@ namespace LumberManagerWebEdition.Controllers
                 orderLineItem.OrderID = newOrder.OrderID;
                 orderLineItem.ProductID = products[i].ProductID;
                 orderLineItem.Quantity = quantity[i];
+                orderLineItem.PricePer1000BoardFeet = PricePer1000;
                 OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
             }
             CookieHelper.DeleteCookie(_httpcontext);
