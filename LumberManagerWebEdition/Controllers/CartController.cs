@@ -96,14 +96,14 @@ namespace LumberManagerWebEdition.Controllers
                 quantity.Add(cartProducts[i].Quantity);
             }
 
-            double totalPrice = 0.0;
+            double boardFeet = 0.0;
 
             for (int i = 0; i < products.Count; i++)
             {
-                int boardFeet = products[i].BoardFeet * quantity[i];
-                double difference = boardFeet * .1;
-                totalPrice = difference + boardFeet;
+                boardFeet += products[i].BoardFeet * quantity[i];
             }
+
+            double totalPrice = boardFeet / 1000 * PricePer1000;
 
             int totalProducts = CookieHelper.GetTotalCartProducts(_httpcontext);
 
@@ -124,6 +124,7 @@ namespace LumberManagerWebEdition.Controllers
             User user = await _userManager.FindByIdAsync(currentUserId);
 
             List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
+            CookieHelper.DeleteCookie(_httpcontext);
             List<Product> products = new List<Product>();
             List<short> quantity = new List<short>();
             for (int i = 0; i < cartProducts.Count; i++)
@@ -146,7 +147,7 @@ namespace LumberManagerWebEdition.Controllers
                 orderLineItem.PricePer1000BoardFeet = PricePer1000;
                 OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
             }
-            CookieHelper.DeleteCookie(_httpcontext);
+            
 
             return View();
         }
