@@ -96,7 +96,6 @@ namespace LumberManagerWebEdition.Controllers
                 quantity.Add(cartProducts[i].Quantity);
             }
 
-            double totalPrice = 0.0;
             double boardFeet = 0.0;
 
             for (int i = 0; i < products.Count; i++)
@@ -104,7 +103,7 @@ namespace LumberManagerWebEdition.Controllers
                 boardFeet += products[i].BoardFeet * quantity[i];
             }
 
-            totalPrice = boardFeet / 1000 * PricePer1000;
+            double totalPrice = boardFeet / 1000 * PricePer1000;
 
             int totalProducts = CookieHelper.GetTotalCartProducts(_httpcontext);
 
