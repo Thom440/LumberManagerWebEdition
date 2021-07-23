@@ -2,8 +2,10 @@
 window.onload = function () {
     let subtract = $(".subtract-button");
     let add = $(".add-button");
+    let updateQuantityTotal = $(".update");
     add.on("click", addQuantity);
-    subtract.on("click", subtractQuantity)
+    subtract.on("click", subtractQuantity);
+    updateQuantityTotal.on("click", updateQuantity)
 }
 
 /**
@@ -28,6 +30,14 @@ function addQuantity() {
     let num = parseInt(input);
     let url = $(this).attr("href");
     num = num + 1;
+    url = url.replace("temp", num);
+    $(this).attr("href", url);
+}
+
+function updateQuantity() {
+    let input = $(this).siblings("#qty").val();
+    let num = parseInt(input);
+    let url = $(this).attr("href");
     url = url.replace("temp", num);
     $(this).attr("href", url);
 }
