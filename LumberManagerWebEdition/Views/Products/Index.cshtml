@@ -181,7 +181,7 @@
         <tbody>
 
             @{
-                string previousUrl = http.HttpContext.Request.Path;
+                string previousUrl = string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString);
             }
             @{
                 int j = 0;
