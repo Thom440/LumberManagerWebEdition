@@ -85,8 +85,8 @@ namespace LumberManagerWebEdition.Data
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
                                        .ThenBy(p => p.Width)
-                                       .ThenBy(p => p.Length)
                                        .ThenBy(p => p.Category[0].CategoryName)
+                                       .ThenBy(p => p.Length)
                                        .Skip(pageSize * (pageNum - 1))
                                        .Take(pageSize)
                                        .ToList();
@@ -122,8 +122,8 @@ namespace LumberManagerWebEdition.Data
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
                                        .ThenBy(p => p.Width)
-                                       .ThenBy(p => p.Length)
                                        .ThenBy(p => p.Category[0].CategoryName)
+                                       .ThenBy(p => p.Length)
                                        .Skip(pageSize * (pageNum - 1))
                                        .Take(pageSize)
                                        .ToList();
@@ -159,8 +159,8 @@ namespace LumberManagerWebEdition.Data
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
                                        .ThenBy(p => p.Width)
-                                       .ThenBy(p => p.Length)
                                        .ThenBy(p => p.Category[0].CategoryName)
+                                       .ThenBy(p => p.Length)
                                        .Skip(pageSize * (pageNum - 1))
                                        .Take(pageSize)
                                        .ToList();
@@ -186,8 +186,8 @@ namespace LumberManagerWebEdition.Data
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
                                        .ThenBy(p => p.Width)
-                                       .ThenBy(p => p.Length)
                                        .ThenBy(p => p.Category[0].CategoryName)
+                                       .ThenBy(p => p.Length)
                                        .Skip(pageSize * (pageNum - 1))
                                        .Take(pageSize)
                                        .ToList();
@@ -206,15 +206,13 @@ namespace LumberManagerWebEdition.Data
         {
             List<Product> products = await (from p in _context.Products
                                             where p.Height == height
-                                            select p).Skip(pageSize * (pageNum - 1))
-                                               .Take(pageSize)
-                                               .Include(nameof(Product.Category))
+                                            select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
                                        .ThenBy(p => p.Width)
-                                       .ThenBy(p => p.Length)
                                        .ThenBy(p => p.Category[0].CategoryName)
+                                       .ThenBy(p => p.Length)
                                        .Skip(pageSize * (pageNum - 1))
                                        .Take(pageSize)
                                        .ToList();
