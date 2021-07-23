@@ -158,10 +158,10 @@ namespace LumberManagerWebEdition.Controllers
         /// <param name="id">Product ID.</param>
         /// <param name="previousUrl">Redirect to where user was.</param>
         /// <returns></returns>
-        public IActionResult Delete(int id, string previousUrl)
+        public IActionResult Delete(int id)
         {
             CookieHelper.DeleteCartProducts(_httpcontext, id);
-            return Redirect(previousUrl);
+            return RedirectToAction("Summary");
         }
     }
 }
