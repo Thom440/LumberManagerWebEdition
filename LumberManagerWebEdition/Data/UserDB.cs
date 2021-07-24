@@ -1,4 +1,5 @@
 ﻿using LumberManagerWebEdition.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace LumberManagerWebEdition.Data
 {
     public static class UserDB
     {
+        public static List<User> GetAllUsers(ApplicationDbContext _context)
+        {
+            List<User> users = (from u in _context.Users
+                                select u).Include(nameof(User.Orders)).ToList();
+            return users;
+        }
+
         /// <summary>
         /// Gets the current user
         /// </summary>
@@ -16,8 +24,8 @@ namespace LumberManagerWebEdition.Data
         {
 
             User user = (from u in _context.Customers
-                               where u.UserID == id
-                               select u).SingleOrDefault();
+                               where u.Id == id
+                               select u).Include(nameof(User.Orders)).SingleOrDefault();
             return user;
         }
 

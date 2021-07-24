@@ -37,7 +37,7 @@ function addQuantity() {
 function updateQuantity() {
     let input = $(this).siblings("#qty").val();
     let num = parseInt(input);
-    let url = $(this).attr("href");
+    let url = $(this).attr("formaction");
     url = url.replace("temp", num);
-    $(this).attr("href", url);
+    $(this).attr("formaction", url);
 }

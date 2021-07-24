@@ -1,4 +1,5 @@
 ﻿using LumberManagerWebEdition.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,14 @@ namespace LumberManagerWebEdition.Data
             _context.Orders.Add(o);
             _context.Customers.Attach(o.Customers[0]);
             _context.SaveChanges();
+        }
+
+        public static Order GetOrder(ApplicationDbContext _context, int orderId)
+        {
+            Order order = (from o in _context.Orders
+                           where o.OrderID == orderId
+                           select o).Single();
+            return order;
         }
     }
 }
