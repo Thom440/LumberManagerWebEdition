@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewData["Title"] = "ViewOrder";
+    Order order = (Order)ViewData["Order"];
+    List<OrderLineItems> orderLineItems = (List<OrderLineItems>)ViewData["LineItems"];
+    User user = (User)ViewData["User"];
+    double totalPrice = 0.0;
+    int totalBoardFeet = 0;
+    int totalUnits = 0;
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h1>
+                    Lumber Everything Co.
+                </h1>
+                <p>
+                    945 The Street Were On Drive
+                </p>
+                <p>
+                    Tacoma WA 98444
+                </p>
+            </th>
+            <th>
+                <h1>
+                    Order Number
+                </h1>
+                <p>
+                    @order.OrderID
+                </p>
+            </th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th>
+                <p>
+                    Sold To:
+                </p>
+                <p>
+                    @user.Business
+                </p>
+                <p>
+                    @user.ContactFirstName @user.ContactLastName
+                </p>
+                <p>
+                    @user.Address
+                </p>
+                <p>
+                    @user.City @user.State @user.ZipCode
+                </p>
+                <p>
+                    @user.PhoneNumber
+                </p>
+            </th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th>
+                <p>
+                    Order Date
+                </p>
+                <p>
+                    @order.InvoiceDate.ToString("MM dd yyyy")
+                </p>
+            </th>
+            <th>
+                <p>
+                    Estimated Ship Date
+                </p>
+                <p>
+                    @order.InvoiceDate.AddDays(14).ToString("MM dd yyyy")
+                </p>
+                
+            </th>
+        </tr>
+    </thead>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Description
+            </th>
+            <th>
+                Units
+            </th>
+            <th>
+                Length
+            </th>
+            <th>
+                Board Feet
+            </th>
+            <th>
+                Price Per 1000
+            </th>
+            <th>
+                Amount
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < orderLineItems.Count; i++)
+        {
+            double price = Convert.ToDouble(orderLineItems[i].Product.BoardFeet) * orderLineItems[i].Quantity / 1000 * orderLineItems[i].PricePer1000BoardFeet;
+            totalPrice += price;
+            int boardFeet = orderLineItems[i].Product.BoardFeet * orderLineItems[i].Quantity;
+            totalBoardFeet += boardFeet;
+            totalUnits += orderLineItems[i].Quantity;
+            <tr>
+                <td>
+                    @orderLineItems[i].Product.Height" x @orderLineItems[i].Product.Width" x @orderLineItems[i].Product.Length'
+                    @orderLineItems[i].Product.Category[0].CategoryName  @orderLineItems[i].Product.Category[1].CategoryName
+                </td>
+                <td>
+                    @orderLineItems[i].Quantity
+                </td>
+                <td>
+                    @orderLineItems[i].Product.Length'
+                </td>
+                <td>
+                    @string.Format("{0:n0}", boardFeet)
+                </td>
+                <td>
+                    $@string.Format("{0:n2}", orderLineItems[i].PricePer1000BoardFeet)
+                </td>
+                <td>
+                    $@string.Format("{0:n2}", price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Total:
+            </th>
+            <th>
+                @totalUnits
+            </th>
+            <th>
+                @string.Format("{0:n0}", totalBoardFeet)
+            </th>
+            <th>
+                $@string.Format("{0:n2}", totalPrice)
+            </th>
+        </tr>
+    </thead>
+</table>
+
+

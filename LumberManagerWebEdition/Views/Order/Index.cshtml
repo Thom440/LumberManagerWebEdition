@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    List<User> users = (List<User>)ViewData["Users"];
+    List<Order> orders = (List<Order>)ViewData["Orders"];
+    User user = (User)ViewData["User"];
+}
+
+<h1>Order Lookup</h1>
+
+@if (User.IsInRole(IdentityHelper.Admin))
+{
+    @if (ViewData["SelectedCustomer"] != null)
+    {
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @ViewData["SelectedCustomer"]
+        </button>
+    }
+    else
+    {
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Customers
+        </button>
+    }
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        @for (int i = 0; i < users.Count; i++)
+        {
+            if (users[i].Business != null)
+            {
+                <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].Business</a>
+            }
+            else
+            {
+                <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].ContactFirstName @users[i].ContactLastName</a>
+            }
+        }
+    </div>
+    @if (orders != null)
+    {
+        @for (int i = 0; i < orders.Count; i++)
+        {
+            <td>
+                <div>
+                    
+                 <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
+                    
+                </div>
+            </td>
+        }
+    }
+}
+
+
