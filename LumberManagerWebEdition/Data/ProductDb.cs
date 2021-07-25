@@ -225,7 +225,7 @@ namespace LumberManagerWebEdition.Data
         /// <param name="_context"></param>
         /// <param name="p">The product.</param>
         /// <returns></returns>
-        public static async Task<Product> Update(ApplicationDbContext _context, Product p)
+        public static async Task<Product> UpdateAsync(ApplicationDbContext _context, Product p)
         {
             _context.Entry(p).State = EntityState.Modified;
             await _context.SaveChangesAsync();
