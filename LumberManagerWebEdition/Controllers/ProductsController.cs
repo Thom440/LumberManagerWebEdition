@@ -274,7 +274,7 @@ namespace LumberManagerWebEdition.Controllers
             {
                 try
                 {
-                    await ProductDb.Update(_context, product);
+                    await ProductDb.UpdateAsync(_context, product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
