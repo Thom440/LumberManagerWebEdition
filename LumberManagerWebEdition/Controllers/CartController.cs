@@ -116,6 +116,10 @@ namespace LumberManagerWebEdition.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Creates an order
+        /// </summary>
+        /// <param name="model"></param>
         [HttpPost]
         public async Task<IActionResult> Confirm(CreateOrderViewModel model)
         {
@@ -154,6 +158,9 @@ namespace LumberManagerWebEdition.Controllers
                 orderLineItem.Quantity = quantity[i];
                 orderLineItem.PricePer1000BoardFeet = PricePer1000;
                 OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
+
+                products[i].Sold += quantity[i];
+                await ProductDb.UpdateAsync(_context, products[i]);
             }
 
             return RedirectToAction("Submit");
