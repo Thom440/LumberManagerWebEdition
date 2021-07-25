@@ -81,11 +81,15 @@ namespace LumberManagerWebEdition.Controllers
         /// <summary>
         /// The confirmation page that is shown before order is submitted
         /// </summary>
+        [HttpGet]
         public async Task<IActionResult> Confirm()
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             User user = await _userManager.FindByIdAsync(currentUserId);
+
+            CreateOrderViewModel model = new CreateOrderViewModel();
+            model.User = user;
 
             List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpcontext);
             List<Product> products = new List<Product>();
@@ -109,16 +113,11 @@ namespace LumberManagerWebEdition.Controllers
 
             ViewData["Cart"] = totalProducts;
             ViewData["Total Price"] = totalPrice; 
-            return View(user);
+            return View(model);
         }
 
-        /// <summary>
-        /// Creates an order based off of the cookie
-        /// Once the order is created the cookie is deleted
-        /// and the submit page is shown
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Submit()
+        [HttpPost]
+        public async Task<IActionResult> Confirm(CreateOrderViewModel model)
         {
             string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User user = await _userManager.FindByIdAsync(currentUserId);
@@ -137,6 +136,15 @@ namespace LumberManagerWebEdition.Controllers
             Order newOrder = new Order();
             newOrder.InvoiceDate = DateTime.Now;
             newOrder.Customers.Add(user);
+
+            newOrder.ShipBusiness = model.Order.ShipBusiness;
+            newOrder.ShipContactFirstName = model.Order.ShipContactFirstName;
+            newOrder.ShipContactLastName = model.Order.ShipContactLastName;
+            newOrder.ShipAddress = model.Order.ShipAddress;
+            newOrder.ShipCity = model.Order.ShipCity;
+            newOrder.ShipState = model.Order.ShipState;
+            newOrder.ShipZipCode = model.Order.ShipZipCode;
+
             OrderDB.AddOrder(_context, newOrder);
 
             for (int i = 0; i < products.Count; i++)
@@ -147,8 +155,18 @@ namespace LumberManagerWebEdition.Controllers
                 orderLineItem.PricePer1000BoardFeet = PricePer1000;
                 OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
             }
-            
 
+            return RedirectToAction("Submit");
+        }
+
+        /// <summary>
+        /// Creates an order based off of the cookie
+        /// Once the order is created the cookie is deleted
+        /// and the submit page is shown
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Submit()
+        {
             return View();
         }
 

@@ -39,12 +39,20 @@
                 <p>
                     Sold To:
                 </p>
-                <p>
-                    @user.Business
-                </p>
-                <p>
-                    @user.ContactFirstName @user.ContactLastName
-                </p>
+                
+                    @if (user.Business != null)
+                    {
+                        <p>
+                            @user.Business
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            @user.ContactFirstName @user.ContactLastName
+                        </p>
+                    }
+
                 <p>
                     @user.Address
                 </p>
@@ -53,6 +61,29 @@
                 </p>
                 <p>
                     @user.PhoneNumber
+                </p>
+            </th>
+            <th>
+                <p>
+                    Ship To:
+                </p>
+                @if (order.ShipBusiness != null)
+            {
+                <p>
+                    @order.ShipBusiness
+                </p>
+            }
+                else
+            {
+                <p>
+                    @order.ShipContactFirstName @order.ShipContactLastName
+                </p>
+            }
+                <p>
+                    @order.ShipAddress
+                </p>
+                <p>
+                    @order.ShipCity @order.ShipState @order.ShipZipCode
                 </p>
             </th>
         </tr>
