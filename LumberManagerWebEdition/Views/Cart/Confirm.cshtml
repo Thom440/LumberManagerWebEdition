@@ -48,27 +48,33 @@
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipContactFirstName" class="control-label">First Name</label>
-                <input class="form-control" asp-for="Order.ShipContactFirstName" />
+                <input id="firstName" class="form-control" asp-for="Order.ShipContactFirstName" />
+                <span id="firstNameError" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipContactLastName" class="control-label">Last Name</label>
-                <input class="form-control" asp-for="Order.ShipContactLastName" />
+                <input id="lastName" class="form-control" asp-for="Order.ShipContactLastName" />
+                <span id="lastNameError" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipAddress" class="control-label">Street Address</label>
-                <input class="form-control" asp-for="Order.ShipAddress" />
+                <input id="address" class="form-control" asp-for="Order.ShipAddress" />
+                <span id="addressError" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipCity" class="control-label">City</label>
-                <input class="form-control" asp-for="Order.ShipCity" />
+                <input id="city" class="form-control" asp-for="Order.ShipCity" />
+                <span id="cityError" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipState" class="control-label">State</label>
-                <input class="form-control" asp-for="Order.ShipState" />
+                <input id="state" class="form-control" asp-for="Order.ShipState" />
+                <span id="stateError" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.ShipZipCode" class="control-label">Zip Code</label>
-                <<input class="form-control" asp-for="Order.ShipZipCode" />
+                <input id="zipCode" class="form-control" asp-for="Order.ShipZipCode" />
+                <span id="zipCodeError" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -86,4 +92,4 @@
     </div>
 </div>
 
-
+<script src="~/js/Confirm.js"></script>
