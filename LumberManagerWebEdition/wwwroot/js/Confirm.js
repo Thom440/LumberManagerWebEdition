@@ -1,7 +1,7 @@
 ﻿
 window.onload = function() {
-    let submit = document.getElementById("submit");
-    submit.onclick = validateEntries;
+    let onSubmit = document.getElementById("submit");
+    onSubmit.onclick = validateEntries;
 }
 
 function validateEntries() {
@@ -12,7 +12,7 @@ function validateEntries() {
             isValid = false;
             $("#confirm").submit(function (e){
                 e.preventDefault();
-            }
+            })
         }
     })
 }
