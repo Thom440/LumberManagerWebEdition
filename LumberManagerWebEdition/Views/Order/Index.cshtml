@@ -10,41 +10,62 @@
 
 @if (User.IsInRole(IdentityHelper.Admin))
 {
-    @if (ViewData["SelectedCustomer"] != null)
+    if (TempData["InvalidOrderNumber"] != null)
     {
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            @ViewData["SelectedCustomer"]
-        </button>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["InvalidOrderNumber"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     }
-    else
-    {
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Customers
-        </button>
-    }
+    <table class="table">
+        <tr>
+            <td>
+                @if (ViewData["SelectedCustomer"] != null)
+                {
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @ViewData["SelectedCustomer"]
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownHeightButton" value="Customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Customers
+                    </button>
+                }
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @for (int i = 0; i < users.Count; i++)
+                    {
+                        if (users[i].Business != null)
+                        {
+                            <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].Business</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].ContactFirstName @users[i].ContactLastName</a>
+                        }
+                    }
+                </div>
+            </td>
+            <td>
+                <h2>Look up by order number:</h2>
+                <input type="text" name="order" id="order" />
+                <a class="btn btn-primary" id="order-button" asp-action="ViewOrder" asp-route-orderId="temp">Look Up</a>
+            </td>
+        </tr>
+    </table>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        @for (int i = 0; i < users.Count; i++)
-        {
-            if (users[i].Business != null)
-            {
-                <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].Business</a>
-            }
-            else
-            {
-                <a class="dropdown-item" asp-action="Index" asp-route-id="@users[i].Id">@users[i].ContactFirstName @users[i].ContactLastName</a>
-            }
-        }
-    </div>
+    
     @if (orders != null)
     {
         @for (int i = 0; i < orders.Count; i++)
         {
             <td>
                 <div>
-                    
-                 <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
-                    
+
+                    <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
+
                 </div>
             </td>
         }
@@ -52,3 +73,4 @@
 }
 
 
+<script src="~/js/OrderLookup.js"></script>
