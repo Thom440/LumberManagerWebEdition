@@ -37,7 +37,7 @@ namespace LumberManagerWebEdition.Models
         /// The date the order has shipped. (nullable)
         /// </summary>
         [Column(TypeName = "smalldatetime")]
-        public DateTime? ShipDate { get; set; }
+        public DateTime ShipDate { get; set; }
 
         /// <summary>
         /// The Shipping Address
@@ -70,7 +70,7 @@ namespace LumberManagerWebEdition.Models
 
         public override string ToString()
         {
-            return $"Invoice number: {OrderID}" + " " + String.Join(" ", Customers);
+            return $"Order number: {OrderID}";
         }
     }
 }
