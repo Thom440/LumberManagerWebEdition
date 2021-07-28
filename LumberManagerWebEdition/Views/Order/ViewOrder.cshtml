@@ -95,7 +95,7 @@
                     Order Date
                 </p>
                 <p>
-                    @order.InvoiceDate.ToString("MM dd yyyy")
+                    @order.InvoiceDate.ToString("MMM dd yyyy")
                 </p>
             </th>
             <th>
@@ -103,7 +103,7 @@
                     Estimated Ship Date
                 </p>
                 <p>
-                    @order.InvoiceDate.AddDays(14).ToString("MM dd yyyy")
+                    @order.InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
                 </p>
                 
             </th>
