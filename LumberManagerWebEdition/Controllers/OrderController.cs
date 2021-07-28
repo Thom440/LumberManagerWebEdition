@@ -41,11 +41,32 @@ namespace LumberManagerWebEdition.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Displays the order selected
+        /// </summary>
+        /// <param name="userId">The id of the user for the order</param>
+        /// <param name="orderId">The id of the order</param>
+        /// <returns></returns>
         public IActionResult ViewOrder(string userId, int orderId)
         {
             List<OrderLineItems> orderLineItems = OrderLineItemsDB.GetOrderLineItems(_context, orderId);
-            User user = UserDB.GetUser(_context, userId);
             Order order = OrderDB.GetOrder(_context, orderId);
+            User user = null;
+            if (userId == null && order != null)
+            {
+                userId = order.Customers[0].Id;
+                user = UserDB.GetUser(_context, userId);
+            }
+            else if (order == null)
+            {
+                TempData["InvalidOrderNumber"] = "Enter a valid order number";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                user = UserDB.GetUser(_context, userId);
+            }
+            
             ViewData["Order"] = order;
             ViewData["User"] = user;
             ViewData["LineItems"] = orderLineItems;

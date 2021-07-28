@@ -20,11 +20,18 @@ namespace LumberManagerWebEdition.Data
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets a single order based on orderId
+        /// returns null if not found
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         public static Order GetOrder(ApplicationDbContext _context, int orderId)
         {
             Order order = (from o in _context.Orders
-                           where o.OrderID == orderId
-                           select o).Single();
+                            where o.OrderID == orderId
+                            select o).Include(u => u.Customers).FirstOrDefault();
             return order;
         }
     }
