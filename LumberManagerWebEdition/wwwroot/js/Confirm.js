@@ -18,30 +18,48 @@ function validateEntries() {
         isValid = false;
         document.getElementById("firstNameError").innerHTML = "First name is required.";
     }
+    else {
+        document.getElementById("firstNameError").innerHTML = "";
+    }
 
     if (lastName.trim() == "") {
         isValid = false;
         document.getElementById("lastNameError").innerHTML = "Last name is required.";
+    }
+    else {
+        document.getElementById("lastNameError").innerHTML = "";
     }
 
     if (address.trim() == "") {
         isValid = false;
         document.getElementById("addressError").innerHTML = "Address is required.";
     }
+    else {
+        document.getElementById("addressError").innerHTML = "";
+    }
 
     if (city.trim() == "") {
         isValid = false;
         document.getElementById("cityError").innerHTML = "City is required.";
+    }
+    else {
+        document.getElementById("cityError").innerHTML = "";
     }
 
     if (state.trim() == "") {
         isValid = false;
         document.getElementById("stateError").innerHTML = "State is required.";
     }
+    else {
+        document.getElementById("stateError").innerHTML = "";
+    }
 
     if (zipCode.trim() == "") {
         isValid = false;
         document.getElementById("zipCodeError").innerHTML = "Zip code is required.";
+    }
+    else {
+        document.getElementById("zipCodeError").innerHTML = "";
     }
 
     if (!isValid) {
