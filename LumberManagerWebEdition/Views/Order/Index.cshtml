@@ -6,10 +6,11 @@
     User user = (User)ViewData["User"];
 }
 
-<h1>Order Lookup</h1>
-
 @if (User.IsInRole(IdentityHelper.Admin))
 {
+    <h1>Order Lookup</h1>
+
+
     if (TempData["InvalidOrderNumber"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -79,30 +80,77 @@
         {
             @for (int i = 0; i < orders.Count; i++)
             {
-    <tr>
-        <td>
-            <div>
-                <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
-            </div>
-        </td>
-        <td>
-            @orders[i].InvoiceDate.ToString("MMM dd yyyy")
-        </td>
+                <tr>
+                    <td>
+                        <div>
+                            <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
+                        </div>
+                    </td>
+                    <td>
+                        @orders[i].InvoiceDate.ToString("MMM dd yyyy")
+                    </td>
 
-        @if (orders[i].ShipDate > orders[i].InvoiceDate)
-        {
-            <td>
-            @orders[i].ShipDate.ToString("MMM dd yyyy")
-            </td>
-        }
-        else
-        {
-            <td>
-            Estimated Ship Date: @orders[i].InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
-            </td>
-        }
+                    @if (orders[i].ShipDate > orders[i].InvoiceDate)
+                    {
+                        <td>
+                            @orders[i].ShipDate.ToString("MMM dd yyyy")
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Estimated Ship Date: @orders[i].InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
+                        </td>
+                    }
 
-    </tr>
+                </tr>
+            }
+        }
+    </table>
+}
+else if (User.IsInRole(IdentityHelper.Customer))
+{
+    <h1>Recent Orders</h1>
+    <table class="table">
+        <tr>
+            <th>
+                Order #
+            </th>
+            <th>
+                Order Date
+            </th>
+            <th>
+                Ship Date
+            </th>
+        </tr>
+        @if (orders != null)
+        {
+            @for (int i = 0; i < orders.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <div>
+                            <a asp-action="ViewOrder" asp-route-orderId="@orders[i].OrderID" asp-route-userId="@user.Id">@orders[i]</a>
+                        </div>
+                    </td>
+                    <td>
+                        @orders[i].InvoiceDate.ToString("MMM dd yyyy")
+                    </td>
+
+                    @if (orders[i].ShipDate > orders[i].InvoiceDate)
+                    {
+                        <td>
+                            @orders[i].ShipDate.ToString("MMM dd yyyy")
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Estimated Ship Date: @orders[i].InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
+                        </td>
+                    }
+
+                </tr>
             }
         }
     </table>

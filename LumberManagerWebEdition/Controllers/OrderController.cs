@@ -1,10 +1,12 @@
 ﻿using LumberManagerWebEdition.Data;
 using LumberManagerWebEdition.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LumberManagerWebEdition.Controllers
@@ -13,22 +15,24 @@ namespace LumberManagerWebEdition.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly UserManager<User> _userManager;
 
-        public OrderController(ApplicationDbContext context, IHttpContextAccessor httpContext)
+        public OrderController(ApplicationDbContext context, IHttpContextAccessor httpContext, UserManager<User> userManager)
         {
             _context = context;
             _httpContext = httpContext;
+            _userManager = userManager;
         }
 
-        public IActionResult Index(string id, int orderid)
+        public async Task<IActionResult> Index(string id, int orderid)
         {
             ViewData["Users"] = UserDB.GetAllUsers(_context);
+            User user = null;
+
 
             if (id != null)
             {
-                User user = UserDB.GetUser(_context, id);
-
-                string userID = user.Id;
+                user = UserDB.GetUser(_context, id);
 
                 List<Order> orders = user.Orders;
 
@@ -36,8 +40,15 @@ namespace LumberManagerWebEdition.Controllers
                 ViewData["Orders"] = orders;
                 ViewData["SelectedCustomer"] = user.ContactFirstName + " " + user.ContactLastName;
             }
-            
+            else if (User.IsInRole(IdentityHelper.Customer))
+            {
+                string currentUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                user = UserDB.GetUser(_context, currentUserId);
 
+                List<Order> orders = user.Orders;
+                ViewData["Orders"] = orders;
+                ViewData["User"] = user;
+            }
             return View();
         }
 
