@@ -139,6 +139,8 @@ namespace LumberManagerWebEdition.Controllers
             OrderLineItems orderLineItem = new OrderLineItems();
             Order newOrder = new Order();
             newOrder.InvoiceDate = DateTime.Now;
+            // Setting ship date in the past to make it invalid
+            newOrder.ShipDate = DateTime.Now.AddDays(-14);
             newOrder.Customers.Add(user);
 
             newOrder.ShipBusiness = model.Order.ShipBusiness;

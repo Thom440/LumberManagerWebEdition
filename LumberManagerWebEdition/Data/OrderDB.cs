@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,10 +30,17 @@ namespace LumberManagerWebEdition.Data
         /// <returns></returns>
         public static Order GetOrder(ApplicationDbContext _context, int orderId)
         {
-            Order order = (from o in _context.Orders
-                            where o.OrderID == orderId
-                            select o).Include(u => u.Customers).FirstOrDefault();
-            return order;
+            try
+            {
+                Order order = (from o in _context.Orders
+                               where o.OrderID == orderId
+                               select o).Include(u => u.Customers).Single();
+                return order;
+            }
+            catch (SqlNullValueException)
+            {
+                return null;
+            }
         }
     }
 }
