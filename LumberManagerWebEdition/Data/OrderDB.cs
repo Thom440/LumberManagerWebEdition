@@ -42,5 +42,17 @@ namespace LumberManagerWebEdition.Data
                 return null;
             }
         }
+
+        /// <summary>
+        /// Updates an order
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <param name="order">The order to be updated</param>
+        /// <returns></returns>
+        public static async Task UpdateOrderAsync(ApplicationDbContext _context, Order order)
+        {
+            _context.Entry(order).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

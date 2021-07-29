@@ -99,13 +99,26 @@
                 </p>
             </th>
             <th>
-                <p>
-                    Estimated Ship Date
-                </p>
-                <p>
-                    @order.InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
-                </p>
-                
+
+                @if (order.ShipDate < order.InvoiceDate)
+                {
+                    <p>
+                        Estimated Ship Date
+                    </p>
+                    <p>
+                        @order.InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Ship Date
+                    </p>
+                    <p>
+                        @order.ShipDate.ToString("MMM dd yyyy")
+                    </p>
+                }
+
             </th>
         </tr>
     </thead>
