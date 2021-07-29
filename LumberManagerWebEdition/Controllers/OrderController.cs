@@ -102,6 +102,14 @@ namespace LumberManagerWebEdition.Controllers
             DateTime parsedDate = DateTime.Parse(date);
 
             Order thisOrder = OrderDB.GetOrder(_context, order);
+            
+            // If order ships the same day as the order date then the parsed date will be at midnight
+            // and therefore will be before the order date making it invalid.
+            if (parsedDate.ToString("MM/dd/yyyy") == thisOrder.InvoiceDate.ToString("MM/dd/yyyy"))
+            {
+                // Set the parsed date to five seconds after the order date
+                parsedDate = thisOrder.InvoiceDate.AddSeconds(5);
+            }
 
             if (parsedDate > DateTime.Now || parsedDate < thisOrder.InvoiceDate)
             {
