@@ -93,7 +93,7 @@
             @orders[i].InvoiceDate.ToString("MMM dd yyyy")
         </td>
 
-        @if (orders[i].ShipDate > orders[i].InvoiceDate)
+        @if (orders[i].ShipDate >= orders[i].InvoiceDate)
         {
             <td>
                 @orders[i].ShipDate.ToString("MMM dd yyyy")
@@ -147,7 +147,7 @@ else if (User.IsInRole(IdentityHelper.Customer))
                         @orders[i].InvoiceDate.ToString("MMM dd yyyy")
                     </td>
 
-                    @if (orders[i].ShipDate > orders[i].InvoiceDate)
+                    @if (orders[i].ShipDate >= orders[i].InvoiceDate)
                     {
                         <td>
                             @orders[i].ShipDate.ToString("MMM dd yyyy")
