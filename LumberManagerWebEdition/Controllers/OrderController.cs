@@ -24,7 +24,7 @@ namespace LumberManagerWebEdition.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(string id, int orderid)
+        public IActionResult Index(string id, int orderid)
         {
             ViewData["Users"] = UserDB.GetAllUsers(_context);
             User user = null;
@@ -82,6 +82,41 @@ namespace LumberManagerWebEdition.Controllers
             ViewData["User"] = user;
             ViewData["LineItems"] = orderLineItems;
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult SetShipDate(int orderId)
+        {
+            Order order = OrderDB.GetOrder(_context, orderId);
+            User user = order.Customers[0];
+            DateTime date = DateTime.Now;
+            ViewData["User"] = user;
+            ViewData["Order"] = order;
+            ViewData["Date"] = date;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetShipDate(string user, int order, string date)
+        {
+            DateTime parsedDate = DateTime.Parse(date);
+
+            Order thisOrder = OrderDB.GetOrder(_context, order);
+
+            if (parsedDate > DateTime.Now || parsedDate < thisOrder.InvoiceDate)
+            {
+                TempData["Error"] = "Date cannot be older than Order Date or in the future";
+                ViewData["User"] = UserDB.GetUser(_context, user);
+                ViewData["Order"] = OrderDB.GetOrder(_context, order);
+                ViewData["date"] = DateTime.Now;
+                return View(thisOrder.OrderID);
+            }
+
+            thisOrder.ShipDate = parsedDate;
+
+            await OrderDB.UpdateOrderAsync(_context, thisOrder);
+
+            return RedirectToAction("Index");
         }
     }
 }
