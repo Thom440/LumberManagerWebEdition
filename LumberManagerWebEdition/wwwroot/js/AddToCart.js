@@ -6,6 +6,10 @@ window.onload = function () {
     add.on("click", addQuantity);
     subtract.on("click", subtractQuantity);
     updateQuantityTotal.on("click", updateQuantity)
+    console.log(document.documentElement.scrollTop, document.documentElement.scrollLeft);
+    let y = document.getElementById("Y");
+    let yPos = parseInt(y.innerText);
+    window.scrollTo(0, yPos);
 }
 
 /**
@@ -16,10 +20,13 @@ function subtractQuantity() {
     console.log($(this).siblings());
     let input = $(this).siblings("#qty").val();
     let num = parseInt(input);
-    let url = $(this).attr("formaction");
+    let url = $(this).attr("href");
     num = num - 1;
+    
     url = url.replace("temp", num);
-    $(this).attr("formaction", url);
+    let y = document.documentElement.scrollTop;
+    url = url.replace("tempY", y);
+    $(this).attr("href", url);
 }
 
 /**
@@ -30,7 +37,10 @@ function addQuantity() {
     let num = parseInt(input);
     let url = $(this).attr("href");
     num = num + 1;
+    
     url = url.replace("temp", num);
+    let y = document.documentElement.scrollTop;
+    url = url.replace("tempY", y);
     $(this).attr("href", url);
 }
 
@@ -38,6 +48,9 @@ function updateQuantity() {
     let input = $(this).siblings("#qty").val();
     let num = parseInt(input);
     let url = $(this).attr("formaction");
+    
     url = url.replace("temp", num);
+    let y = document.documentElement.scrollTop;
+    url = url.replace("tempY", y);
     $(this).attr("formaction", url);
 }
