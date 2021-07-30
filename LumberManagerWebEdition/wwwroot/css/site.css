@@ -11,6 +11,10 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+#hamburger {
+    display: none;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -34,10 +38,16 @@ html {
   font-size: 15px;
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   html {
     font-size: 15px;
   }
+  .navbar {
+      display: block;
+  }
+    #hamburger {
+        display: block;
+    }
 }
 
 .border-top {
