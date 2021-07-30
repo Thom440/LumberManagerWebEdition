@@ -38,7 +38,7 @@ namespace LumberManagerWebEdition.Controllers
         /// <param name="length">Length of a product.</param>
         /// <param name="category">Category of a product.</param>
         /// <param name="treatmentType">Treatment type of a product.</param>
-        public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType, int? scrollY)
+        public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
             int pageNum = id ?? 1;
             const int PageSize = 20;
@@ -75,14 +75,6 @@ namespace LumberManagerWebEdition.Controllers
             ViewData["ListCategory"] = filterLists.listCategory;
 
             ViewData["ListType"] = filterLists.listType;
-            if (scrollY != null)
-            {
-                ViewData["YPosition"] = scrollY;
-            }
-            else
-            {
-                ViewData["YPosition"] = 0;
-            }
 
             int totalPages = (int)Math.Ceiling((double)filterProducts.numProducts / PageSize);
 
