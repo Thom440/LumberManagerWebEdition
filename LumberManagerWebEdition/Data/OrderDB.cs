@@ -30,17 +30,10 @@ namespace LumberManagerWebEdition.Data
         /// <returns></returns>
         public static Order GetOrder(ApplicationDbContext _context, int orderId)
         {
-            try
-            {
                 Order order = (from o in _context.Orders
                                where o.OrderID == orderId
-                               select o).Include(u => u.Customers).Single();
-                return order;
-            }
-            catch (SqlNullValueException)
-            {
-                return null;
-            }
+                               select o).Include(u => u.Customers).SingleOrDefault();
+                return order; 
         }
 
         /// <summary>
