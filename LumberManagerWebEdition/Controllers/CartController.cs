@@ -38,7 +38,7 @@ namespace LumberManagerWebEdition.Controllers
         /// <param name="id">Product ID to be added.</param>
         /// <param name="previousUrl">Redirect to where user was.</param>
         /// <param name="inputquantity">Amount of product to be added to cart.</param>
-        public IActionResult Add(int id, string previousUrl, byte inputquantity)
+        public IActionResult Add(int id, string previousUrl, byte inputquantity, int? scrollY)
         {
             Product p = ProductDb.GetProduct(_context, id);
 
@@ -56,6 +56,14 @@ namespace LumberManagerWebEdition.Controllers
                 {
                     TempData["Message"] = p.Height + " x " + p.Width + " x " + p.Length + " " + p.Category[0] + " " + p.Category[1] + " was removed.";
                 }
+            }
+            if (scrollY != null)
+            {
+                TempData["YPosition"] = scrollY;
+            }
+            else
+            {
+                TempData["YPosition"] = 0;
             }
 
             return Redirect(previousUrl);
