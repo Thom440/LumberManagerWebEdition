@@ -40,18 +40,63 @@ namespace LumberManagerWebEdition.Controllers
         /// <param name="treatmentType">Treatment type of a product.</param>
         public async Task<IActionResult> Index(int? id, byte? height, byte? width, byte? length, string category, string treatmentType)
         {
-
             int pageNum = id ?? 1;
             const int PageSize = 20;
             ViewData["CurrentPage"] = pageNum;
 
             List<byte> listHeight = await ProductDb.GetHeightAsync(_context);
+
+            // Getting values for filtered drop down boxes.
+            var filterLists = await GetFilteredValues(height, width, length, category);
+
+            // Getting products based off filter preferences.
+            var filterProducts = await GetFilteredProducts(PageSize, pageNum, height, width, length, category, treatmentType);
+            
+            List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpContext);
+
+            ViewData["CartProducts"] = cartProducts;
+
+            ViewData["Height"] = height;
+
+            ViewData["Width"] = width;
+
+            ViewData["Length"] = length;
+
+            ViewData["Category"] = category;
+
+            ViewData["Type"] = treatmentType;
+
+            ViewData["ListHeight"] = listHeight;
+
+            ViewData["ListWidth"] = filterLists.listWidth;
+
+            ViewData["ListLength"] = filterLists.listLength;
+
+            ViewData["ListCategory"] = filterLists.listCategory;
+
+            ViewData["ListType"] = filterLists.listType;
+
+            int totalPages = (int)Math.Ceiling((double)filterProducts.numProducts / PageSize);
+
+            ViewData["MaxPage"] = totalPages;
+
+            return View(filterProducts.products);
+        }
+
+        /// <summary>
+        /// Grabs filter values based on previous filter data
+        /// </summary>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="length"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        private async Task<(List<byte> listWidth, List<byte> listLength, List<Category> listCategory, List<Category> listType)> GetFilteredValues(byte? height, byte? width, byte? length, string category)
+        {
             List<byte> listWidth = new List<byte>();
             List<byte> listLength = new List<byte>();
             List<Category> listCategory = new List<Category>();
             List<Category> listType = new List<Category>();
-
-            // Getting values for filtered drop down boxes.
             if (height != null)
             {
                 listWidth = await ProductDb.GetWidthAsync(_context, (byte)height);
@@ -68,11 +113,25 @@ namespace LumberManagerWebEdition.Controllers
                     }
                 }
             }
+            return (listWidth, listLength, listCategory, listType);
+        }
 
-            List<Product> products;
+        /// <summary>
+        /// Grabs products based on filter data and page number and page size
+        /// </summary>
+        /// <param name="PageSize"></param>
+        /// <param name="pageNum"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="length"></param>
+        /// <param name="category"></param>
+        /// <param name="treatmentType"></param>
+        /// <returns></returns>
+        private async Task<(List<Product> products, int numProducts)> GetFilteredProducts(int PageSize, int pageNum, byte? height, byte? width, byte? length, 
+                                                                                                            string category, string treatmentType)
+        {
             int numProducts;
-
-            // Getting products based off filter preferences.
+            List<Product> products;
             if (height != null && width != null && length != null && category != null && treatmentType != null)
             {
                 products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum, (byte)height, (byte)width, (byte)length, category, treatmentType);
@@ -103,38 +162,7 @@ namespace LumberManagerWebEdition.Controllers
                 products = await ProductDb.GetAllProductsAsync(_context, PageSize, pageNum);
                 numProducts = await ProductDb.GetTotalProductsAsync(_context);
             }
-
-            List<ProductCookieHelper> cartProducts = CookieHelper.GetCartProducts(_httpContext);
-
-            ViewData["CartProducts"] = cartProducts;
-
-            ViewData["Height"] = height;
-
-            ViewData["Width"] = width;
-
-            ViewData["Length"] = length;
-
-            ViewData["Category"] = category;
-
-            ViewData["Type"] = treatmentType;
-
-            ViewData["ListHeight"] = listHeight;
-
-            ViewData["ListWidth"] = listWidth;
-
-            ViewData["ListLength"] = listLength;
-
-            ViewData["ListCategory"] = listCategory;
-
-            ViewData["ListType"] = listType;
-
-
-
-            int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
-
-            ViewData["MaxPage"] = totalPages;
-
-            return View(products);
+            return (products, numProducts);
         }
 
         /// <summary>
