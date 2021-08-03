@@ -138,13 +138,60 @@ namespace LumberManagerWebEdition.Controllers
             CookieHelper.DeleteCookie(_httpcontext);
             List<Product> products = new List<Product>();
             List<short> quantity = new List<short>();
+            GetCartProducts(cartProducts, products, quantity);
+
+            OrderLineItems orderLineItem = new OrderLineItems();
+            Order newOrder = CreateOrder(model, user);
+            await CreateLineItems(products, quantity, orderLineItem, newOrder);
+
+            return RedirectToAction("Submit");
+        }
+
+        /// <summary>
+        /// Gets the cart products and puts them in lists.
+        /// </summary>
+        /// <param name="cartProducts"></param>
+        /// <param name="products"></param>
+        /// <param name="quantity"></param>
+        private void GetCartProducts(List<ProductCookieHelper> cartProducts, List<Product> products, List<short> quantity)
+        {
             for (int i = 0; i < cartProducts.Count; i++)
             {
                 products.Add(ProductDb.GetProduct(_context, cartProducts[i].ProductID));
                 quantity.Add(cartProducts[i].Quantity);
             }
+        }
 
-            OrderLineItems orderLineItem = new OrderLineItems();
+        /// <summary>
+        /// Adding line items to the database.
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="quantity"></param>
+        /// <param name="orderLineItem"></param>
+        /// <param name="newOrder"></param>
+        private async Task CreateLineItems(List<Product> products, List<short> quantity, OrderLineItems orderLineItem, Order newOrder)
+        {
+            for (int i = 0; i < products.Count; i++)
+            {
+                orderLineItem.OrderID = newOrder.OrderID;
+                orderLineItem.ProductID = products[i].ProductID;
+                orderLineItem.Quantity = quantity[i];
+                orderLineItem.PricePer1000BoardFeet = PricePer1000;
+                OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
+
+                products[i].Sold += quantity[i];
+                await ProductDb.UpdateAsync(_context, products[i]);
+            }
+        }
+
+        /// <summary>
+        /// Creating an order.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private Order CreateOrder(CreateOrderViewModel model, User user)
+        {
             Order newOrder = new Order();
             newOrder.InvoiceDate = DateTime.Now;
             // Setting ship date in the past to make it invalid
@@ -160,20 +207,7 @@ namespace LumberManagerWebEdition.Controllers
             newOrder.ShipZipCode = model.Order.ShipZipCode;
 
             OrderDB.AddOrder(_context, newOrder);
-
-            for (int i = 0; i < products.Count; i++)
-            {
-                orderLineItem.OrderID = newOrder.OrderID;
-                orderLineItem.ProductID = products[i].ProductID;
-                orderLineItem.Quantity = quantity[i];
-                orderLineItem.PricePer1000BoardFeet = PricePer1000;
-                OrderLineItemsDB.AddOrderLineItem(_context, orderLineItem);
-
-                products[i].Sold += quantity[i];
-                await ProductDb.UpdateAsync(_context, products[i]);
-            }
-
-            return RedirectToAction("Submit");
+            return newOrder;
         }
 
         /// <summary>
