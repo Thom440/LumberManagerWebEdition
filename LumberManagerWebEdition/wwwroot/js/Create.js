@@ -15,6 +15,25 @@
     onSubmit.onclick = validateCheckboxes;
 }
 
+function validateInput() {
+    bool isValid = true;
+
+    if (document.getElementById("height").value.trim() == "") {
+        isValid = false;
+    }
+    if (document.getElementById("width").value.trim() == "") {
+        isValid = false;
+    }
+    if (document.getElementById("length").value.trim() == "") {
+        isValid = false;
+    }
+    if (document.getElementById("boardfeet").value.trim() == "") {
+        isValid = false;
+    }
+
+    return isValid;
+}
+
 /**
  * Checks to see which checkboxes are checked.
  **/
@@ -40,7 +59,9 @@ function validateCheckboxes() {
         });
     }
     else {
-        $("#create").unbind("submit").submit();
+        if (validateInput) {
+            $("#create").unbind("submit").submit();
+        } 
     }
 }
 
