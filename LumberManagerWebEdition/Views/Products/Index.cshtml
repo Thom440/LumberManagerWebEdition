@@ -20,7 +20,6 @@
         yPosition = (int)TempData["YPosition"];
     }
 }
-    <a id="Y" style="display: none" value="@yPosition">@yPosition</a>
 
 
 
@@ -296,4 +295,6 @@ else
 {
     <h1 class="text-danger">Log in or register to see Products.</h1>
 }
+<!--Making the y position available to AddToCart.js-->
+<script>let yPos = @yPosition;</script>
 <script src="~/js/AddToCart.js"></script>

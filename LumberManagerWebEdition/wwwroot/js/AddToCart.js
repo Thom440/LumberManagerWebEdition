@@ -7,8 +7,6 @@ window.onload = function () {
     subtract.on("click", subtractQuantity);
     updateQuantityTotal.on("click", updateQuantity)
     console.log(document.documentElement.scrollTop, document.documentElement.scrollLeft);
-    let y = document.getElementById("Y");
-    let yPos = parseInt(y.innerText);
     window.scrollTo(0, yPos);
 }
 
