@@ -67,6 +67,7 @@ namespace LumberManagerWebEdition.Models
             const string state = "WA";
             const int zip = 98444;
             const string business = "Lumber Everything";
+            const string phoneNumber = "253-555-6556";
 
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
@@ -83,7 +84,8 @@ namespace LumberManagerWebEdition.Models
                     City = city,
                     State = state,
                     ZipCode = zip,
-                    Business = business
+                    Business = business,
+                    PhoneNumber = phoneNumber
                 };
 
                 // Create admin
