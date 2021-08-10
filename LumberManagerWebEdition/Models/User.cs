@@ -44,6 +44,9 @@ namespace LumberManagerWebEdition.Models
         [Required]
         public int ZipCode { get; set; }
 
+        [Required]
+        public override string PhoneNumber { get; set; }
+
         public List<Order> Orders { get; set; } = new List<Order>();
 
         public override string ToString()
