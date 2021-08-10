@@ -97,6 +97,9 @@
                 <p>
                     @order.InvoiceDate.ToString("MMM dd yyyy")
                 </p>
+                <p>
+                    Contact: @user.PhoneNumber
+                </p>
             </th>
             <th>
 
@@ -108,6 +111,10 @@
                     <p>
                         @order.InvoiceDate.AddDays(14).ToString("MMM dd yyyy")
                     </p>
+                    <!--Adding a space so shipping date lines up with order date.-->
+                    <p>
+                        &nbsp;
+                    </p>
                 }
                 else
                 {
@@ -116,6 +123,10 @@
                     </p>
                     <p>
                         @order.ShipDate.ToString("MMM dd yyyy")
+                    </p>
+                    <!--Adding a space so shipping date lines up with order date.-->
+                    <p>
+                        &nbsp;
                     </p>
                 }
 
