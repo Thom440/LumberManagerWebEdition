@@ -58,9 +58,9 @@
                     <partial name="_LoginPartial" />
 
                     <img alt="Weather Icon" height="100" src="@string.Format("https://openweathermap.org/img/wn/{0}@2x.png", GetWeather.weather.WeatherIcon)" />
-                    <span>@GetWeather.weather.City</span>
-                    Temperature(Feels Like)&nbsp;<label>@(Convert.ToInt32((Convert.ToDouble(GetWeather.weather.TempFeelsLike) * 9 / 5 + 32)))</label>
-                    Temperature <label>@(Convert.ToInt32((Convert.ToDouble(GetWeather.weather.Temp) * 9 / 5 + 32)))</label>
+                    <span>@GetWeather.weather.City &nbsp;</span>
+                    Temperature(Feels Like)&nbsp;<label>@(Convert.ToInt32((Convert.ToDouble(GetWeather.weather.TempFeelsLike) * 9 / 5 + 32))) &nbsp;</label>
+                    Temperature &nbsp; <label>@(Convert.ToInt32((Convert.ToDouble(GetWeather.weather.Temp) * 9 / 5 + 32)))</label>
                 </div>
             </div>
         </nav>
