@@ -124,7 +124,20 @@ namespace LumberManagerWebEdition.Controllers
 
             await OrderDB.UpdateOrderAsync(_context, thisOrder);
 
+            await AdjustQuantities(thisOrder);
+
             return RedirectToAction("Index");
+        }
+
+        public async Task AdjustQuantities(Order order)
+        {
+            List<OrderLineItems> orderLineItems = OrderLineItemsDB.GetOrderLineItems(_context, order.OrderID);
+            for (int i = 0; i < orderLineItems.Count; i++)
+            {
+                orderLineItems[i].Product.OnHand -= orderLineItems[i].Quantity;
+                orderLineItems[i].Product.Sold -= orderLineItems[i].Quantity;
+                await ProductDb.UpdateAsync(_context, orderLineItems[i].Product);
+            }
         }
     }
 }
