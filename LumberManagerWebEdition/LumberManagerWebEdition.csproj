@@ -19,4 +19,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\LumberEverything.jpg" />
+    <None Include="wwwroot\Images\LumberEverything.png" />
+  </ItemGroup>
+
 </Project>
