@@ -45,6 +45,11 @@ namespace LumberManagerWebEdition.Models
         /// </summary>
         public short Sold { get; set; } = 0;
 
+        /// <summary>
+        /// If the product is not for sale then it is not shown on the products page
+        /// </summary>
+        public bool IsForSale { get; set; } = true;
+
         public override string ToString()
         {
             return Height + " x " + Width + " x " + Length + " In Stock " + OnHand + " Sold " + Sold + " " + String.Join(" ", Category);

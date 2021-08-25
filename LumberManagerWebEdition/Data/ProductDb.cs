@@ -42,6 +42,22 @@ namespace LumberManagerWebEdition.Data
             return product;
         }
 
+        public static Product GetProduct(ApplicationDbContext _context, Product product)
+        {
+            List<Product> products = (from p in _context.Products
+                    where p.Height == product.Height && p.Width == product.Width && p.Length == product.Length
+                    select p).Include(nameof(Product.Category)).ToList();
+            for (int i = 0; i < products.Count; i++)
+            {
+                if (products[i].Category[0].CategoryName == product.Category[0].CategoryName 
+                    && products[i].Category[1].CategoryName == product.Category[1].CategoryName)
+                {
+                    return products[i];
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Grabs 'x' amount of products based off of page size.
         /// </summary>
@@ -51,7 +67,8 @@ namespace LumberManagerWebEdition.Data
         public static async Task<List<Product>> GetAllProductsAsync(ApplicationDbContext _context, int pageSize, int pageNum)
         {
             List<Product> products = await (from p in _context.Products
-                                      select p).Include(nameof(Product.Category))
+                                            where p.IsForSale == true
+                                            select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
                                        .ThenBy(p => p.Height)
@@ -79,7 +96,7 @@ namespace LumberManagerWebEdition.Data
                                                                                                 byte width, byte length, string category, string treatmentType)
         {
             List<Product> products = await (from p in _context.Products
-                                            where p.Height == height && p.Width == width && p.Length == length
+                                            where p.Height == height && p.Width == width && p.Length == length && p.IsForSale == true
                                             select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
@@ -116,7 +133,7 @@ namespace LumberManagerWebEdition.Data
                                                                                                 byte width, byte length, string category)
         {
             List<Product> products = await (from p in _context.Products
-                                            where p.Height == height && p.Width == width && p.Length == length
+                                            where p.Height == height && p.Width == width && p.Length == length && p.IsForSale == true
                                             select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
@@ -153,7 +170,7 @@ namespace LumberManagerWebEdition.Data
                                                                                                 byte width, byte length)
         {
             List<Product> products = await (from p in _context.Products
-                                            where p.Height == height && p.Width == width && p.Length == length
+                                            where p.Height == height && p.Width == width && p.Length == length && p.IsForSale == true
                                             select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
@@ -180,7 +197,7 @@ namespace LumberManagerWebEdition.Data
                                                                                                 byte width)
         {
             List<Product> products = await (from p in _context.Products
-                                            where p.Height == height && p.Width == width
+                                            where p.Height == height && p.Width == width && p.IsForSale == true
                                             select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
@@ -205,7 +222,7 @@ namespace LumberManagerWebEdition.Data
         public static async Task<List<Product>> GetAllProductsAsync(ApplicationDbContext _context, int pageSize, int pageNum, byte height)
         {
             List<Product> products = await (from p in _context.Products
-                                            where p.Height == height
+                                            where p.Height == height && p.IsForSale == true
                                             select p).Include(nameof(Product.Category))
                                                .ToListAsync();
             products = products.OrderBy(p => p.Category[1].CategoryName)
