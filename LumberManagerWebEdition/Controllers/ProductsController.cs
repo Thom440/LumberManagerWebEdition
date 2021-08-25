@@ -255,7 +255,17 @@ namespace LumberManagerWebEdition.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = "Product not added. Product already in database.";
+                    Product product = ProductDb.GetProduct(_context, createProductViewModel.Product);
+                    
+                    if (product != null && !product.IsForSale)
+                    {
+                        product.IsForSale = true;
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Product not added. Product already in database.";
+                    }
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -353,7 +363,7 @@ namespace LumberManagerWebEdition.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            product.IsForSale = false;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
